@@ -2,24 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import Layout from "./Layout";
 import CardTest from "./test/CardTest";
 import Card from "./components/Card/Card";
-import BrowserFrameContainer from "./components/BrowserFrameContainer";
 import { Button } from "@mui/material";
+import BrowserScraper from "./pages/BrowserScraper";
+import useBrowserFrameUpdater from "./hooks/useBrowserFrameUpdater";
 
 
 export default function MainComponent() {
 
-    const [hidden, setHidden] = useState(true);
-    const [dimensionsUpdate, setDimensionsUpdate] = useState(0);
-    
-    const clickHandler = (e) => {
-        setHidden(prevState => !prevState);
-    }
-
-    const mainBodyAnimationEndHandler =(e) => {
-        setDimensionsUpdate(prev => prev + 1);
-    }
-
-
+    const {hidden, hideClickHandler, dimensionsUpdate,mainBodyAnimationEndHandler} = useBrowserFrameUpdater();
 
     return (
         <div className={`main-component`} >
@@ -28,27 +18,14 @@ export default function MainComponent() {
                 <Layout mainBodyAnimationEndHandler={mainBodyAnimationEndHandler}>
                     {/* <Card/>
                     <Card/>
-                    <Card/>
-                    <Card/>
-                    <Card/>
-                    <Card/>
-                    <Card/>
-                    <Card/>
-                    <Card/>
-                    <Card/>
-                    <Card/> */}
-                    {/* <BrowserFrameContainer hidden={hidden} dimensionsUpdate={dimensionsUpdate}>
-                        <Card>
-                            <Button onClick={clickHandler}>Hide it</Button> 
-                        </Card>
-                    </BrowserFrameContainer> */}
+                    <Card/>*/}
 
-                    <BrowserFrameContainer hidden={hidden} dimensionsUpdate={dimensionsUpdate}>
+                    <BrowserScraper hidden={hidden} dimensionsUpdate={dimensionsUpdate} >
                         <Card>
-                            <Button onClick={clickHandler}>Hide it</Button> 
+                            <Button onClick={hideClickHandler}>{hidden ? "Reveal Browser Frame" : "hide browser frame"}</Button> 
                         </Card>
-                    </BrowserFrameContainer>
-                    {/* <CardTest /> */}
+                    </BrowserScraper>
+
                 </Layout>
             
             </div>
