@@ -1,0 +1,639 @@
+@import "./variable";
+@import "./mixins";
+
+html    {
+    font-size : 18px;
+}
+#cc-scraper-widget-container {
+
+    z-index: 7747;
+    width : 100%;
+    height : 0;
+
+    
+
+
+    /*******************************
+
+        Reset
+
+    *******************************/
+
+    
+    div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, 
+    figure, figcaption, footer, header, hgroup, 
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        vertical-align: baseline;
+        word-wrap : break-word;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure, 
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+    body {
+        line-height: 1;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    
+
+
+
+
+    /*******************************
+
+        Defaults
+
+    *******************************/
+
+    *   {
+        box-sizing : border-box;
+
+        &.flex  {
+            display : flex;
+
+            &.gapped   {
+                gap : .5rem;
+            }
+            &.gapped-1   {
+                gap : 1rem;
+            }
+            
+
+            &.left  {
+                @include flex-items-left("row");
+            }
+
+            &.right {
+                @include flex-items-right("row");
+            }
+
+            &.top   {
+                @include flex-items-top("row");
+            }
+
+            &.bot   {
+                @include flex-items-bot("row");
+            }
+
+            &.center-top    {
+                @include flex-items-center-x("row");
+                @include flex-items-top("row");
+            }
+
+            &.center-bot   {
+                @include flex-items-center-x("row");
+                @include flex-items-bot("row");
+            }
+
+            &.center-left   {
+                @include flex-items-center-y("row");
+                @include flex-items-left("row");
+            }
+
+            &.center-right   {
+                @include flex-items-center-y("row");
+                @include flex-items-right("row");
+            }
+
+
+            &.row   {
+                @include flex-row();
+
+                &.left  {
+                    @include flex-items-left("row");
+                }
+
+                &.right {
+                    @include flex-items-right("row");
+                }
+
+                &.top   {
+                    @include flex-items-top("row");
+                }
+
+                &.bot   {
+                    @include flex-items-bot("row");
+                }
+
+                &.center-top    {
+                    @include flex-items-center-x("row");
+                    @include flex-items-top("row");
+                }
+
+                &.center-bot   {
+                    @include flex-items-center-x("row");
+                    @include flex-items-bot("row");
+                }
+
+                &.center-left   {
+                    @include flex-items-center-y("row");
+                    @include flex-items-left("row");
+                }
+
+                &.center-right   {
+                    @include flex-items-center-y("row");
+                    @include flex-items-right("row");
+                }
+
+                flex-wrap : wrap;
+                
+
+                &.col-1 > *, &> .col-1 {
+                    width: 8.33%;
+                }
+                &.col-2 > *, & > .col-2 {
+                    width: 16.66%;
+                }
+                &.col-3 > *, & > .col-3 {
+                    width: 25%;
+                }
+                &.col-4 > *, & > .col-4 {
+                    width: 33.33%;
+                }
+                &.col-5 > *, & > .col-5 {
+                    width: 41.66%;
+                }
+                &.col-6 > *, & > .col-6 {
+                    width: 50%;
+                }
+                &.col-7 > *, & > .col-7 {
+                    width: 58.33%;
+                }
+                &.col-8 > *, & > .col-8 {
+                    width: 66.66%;
+                }
+                &.col-9 > *, & > .col-9 {
+                    width: 75%;
+                }
+                &.col-10 > *, & > .col-10 {
+                    width: 83.33%;
+                }
+                &.col-11 > *, & > .col-11 {
+                    width: 91.66%;
+                }
+                &.col-12 > *, & > .col-12 {
+                    width: 100%;
+                }
+
+
+            }
+    
+            &.col   {
+
+
+                @include flex-col();
+
+                gap : 1.5rem;
+
+
+                &.left  {
+                    @include flex-items-left("col");
+                }
+
+                &.right {
+                    @include flex-items-right("col");
+                }
+
+                &.top   {
+                    @include flex-items-top("col");
+                }
+
+                &.bot   {
+                    @include flex-items-bot("col");
+                }
+
+                &.center-top    {
+                    @include flex-items-center-x("col");
+                    @include flex-items-top("col");
+                }
+
+                &.center-bot   {
+                    @include flex-items-center-x("col");
+                    @include flex-items-bot("col");
+                }
+
+                &.center-left   {
+                    @include flex-items-center-y("col");
+                    @include flex-items-left("col");
+                }
+
+                &.center-right   {
+                    @include flex-items-center-y("col");
+                    @include flex-items-right("col");
+                }
+
+
+            }
+
+            &.center    {
+                @include flex-items-center();
+            }
+
+            &.stretch   {
+                @include flex-items-stretch();
+            }
+
+            &.space-evenly  {
+                @include flex-items-space-evenly();
+            }
+
+            &.space-around  {
+                @include flex-items-space-around();
+            }
+
+            &.space-between {
+                @include flex-items-space-between();
+            }
+
+        }
+    }
+
+    font-family : $font-family;
+    font-size : $font-size-md;
+    font-weight : normal;
+    color : #343434;
+    color : $darkmode-secondary-color;
+    line-height : 1.3;
+
+    
+    h1  {
+        font-size : 2.75rem;
+        font-family : $font-family;
+        font-weight : bold;
+    }
+    
+    h2  {
+        font-size : 2.5rem;
+        font-family : $font-family;
+        font-weight : bold;
+    }
+    
+    h3  {
+        font-size : 2.25rem;
+        font-family : $font-family;
+        font-weight : bold;
+    }
+    
+    h4  {
+        font-size : 2rem;
+        font-family : $font-family;
+        font-weight : bold;
+    }
+    
+    h5  {
+        font-size : 1.75rem;
+        font-family : $font-family;
+        font-weight : bold;
+    }
+    
+    h6  {
+        font-size : 1.5rem;
+        font-family : $font-family;
+        font-weight : bold;
+    }
+
+    .success-text {
+        color : $success-text;
+    }
+    .error-text {
+        color : $error-text;
+    }
+    .info-text {
+        color : $info-text;
+    }
+    .warning-text {
+        color : $warning-text;
+    }
+
+    .hidden {
+        display : none!important;
+        height : 0!important;
+        width : 0!important;
+    }
+
+    img {
+        width : 100%;
+    }
+
+    .card   {
+        box-shadow: 0px 0px 3px 1px #b4b4b46b;
+        background-color : $darkmode-bg;
+        padding : 1.5rem;
+    }
+
+    .empty-card {
+        padding : .5rem;
+        width : 100%;
+
+        &.light-bg  {
+            background-color : #4c4c4ca3;
+        }
+
+        &.empty-card-container   {
+            display : flex;
+            flex-direction : row;
+            justify-content: stretch;
+            align-items: stretch;
+    
+            & > .card   {
+                width : 100%;
+            }
+        }
+
+        &.main-empty-card {
+            min-height : calc(100vh - 2.8rem);
+            padding : 0;
+        }
+
+        &.no-padding {
+            padding : 0;
+        }
+    }
+
+    
+
+    
+
+    hr  {
+        border-color : #707070;
+        margin : 1.4rem 0;
+        width : 100%!important;
+    }
+
+
+
+    /* Change Autocomplete styles in Chrome*/
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus,
+    .filled input:-webkit-autofill,
+    .filled input:-webkit-autofill:hover, 
+    .filled input:-webkit-autofill:focus,
+    .filled textarea:-webkit-autofill,
+    .filled textarea:-webkit-autofill:hover,
+    .filled textarea:-webkit-autofill:focus,
+    .filled select:-webkit-autofill,
+    .filled select:-webkit-autofill:hover,
+    .filled select:-webkit-autofill:focus {
+    border: none!important;
+    -webkit-text-fill-color: inherit!important;
+    box-shadow: 0 0 0px 1000px rga(255,255,255,0) inset!important;
+    -webkit-box-shadow: 0 0 0px 1000px rga(255,255,255,0) inset!important;
+    transition: background-color 5000s ease-in-out 0s!important;
+    color : inherit;
+    }
+
+
+
+    $scrollbar-track-bg : rgb(161, 189, 189);
+    $scrollbar-thumb-bg : rgb(200, 212, 219);
+    $scrollbar-thumb-hover-bg : rgb(177, 194, 206);
+
+
+    @media only screen and (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+        
+        // font-size : 18px;
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height : 10px;
+        }
+        
+    /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px $scrollbar-track-bg; 
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: $scrollbar-thumb-bg; 
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: $scrollbar-thumb-hover-bg; 
+        }
+
+    }
+
+    @media only screen and (min-width: $tablet-min-width) and (max-width: $tablet-max-width) {
+        
+        // font-size : 18px;
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height : 10px;
+        }
+        
+    /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px $scrollbar-track-bg; 
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: $scrollbar-thumb-bg; 
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: $scrollbar-thumb-hover-bg; 
+        }
+
+    }
+
+
+    @media only screen and (min-width: $laptop-min-width) and (max-width: $laptop-max-width) {
+        
+        // font-size : 18px;
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height : 10px;
+        }
+        
+    /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px $scrollbar-track-bg; 
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: $scrollbar-thumb-bg; 
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: $scrollbar-thumb-hover-bg; 
+        }
+
+    }
+
+    @media only screen and (min-width: $pc-min-width) and (max-width: $pc-max-width) {
+        
+        // font-size : 18px;
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height : 10px;
+        }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px $scrollbar-track-bg; 
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: $scrollbar-thumb-bg; 
+        }
+        
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: $scrollbar-thumb-hover-bg; 
+        }
+    }
+
+    @media only screen and (min-width: $ultra-min-width) {
+        
+        // font-size : 20px;
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height : 10px;
+        }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px $scrollbar-track-bg; 
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: $scrollbar-thumb-bg; 
+        }
+        
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: $scrollbar-thumb-hover-bg; 
+        }
+
+    }
+
+    // customized
+
+    .MuiButtonGroup-grouped:not(:last-of-type) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: 1px solid #bdbdbd;
+        border-color: #00000042;
+    }
+
+    .MuiTextField-root  {
+        display : inline-flex;
+    }
+
+    .MuiTextField-root .MuiInputBase-root {
+        color : $darkmode-color;
+        outline : 1px solid rgb(136, 136, 136);
+        background-color : #00000070;
+        height : auto;
+        padding : 0;
+        margin : 0;
+        font-size  : $font-size-sm;
+    }
+
+    // .MuiTextField-root .MuiInputBase-root .MuiInputBase-input   {
+    //     padding : 0;
+    // }
+
+    // .MuiTextField-root .MuiInputBase-root.Mui-focused {
+    //     outline : 1px solid #97efe2;
+    // }
+
+    // .MuiTextField-root label[data-shrink="true"] {
+    //     color : $info-text;
+    //     // top: -20px;
+    // }
+
+    .MuiTextField-root label[data-shrink="false"]  {
+        color : $darkmode-color;
+        font-size : 16px;
+        position : absolute;
+        padding : 0;
+        top : 0;
+        left : 0;
+        line-height : 1;
+    }
+
+    /*******************************
+
+        App
+
+    *******************************/
+
+    .app    {
+
+        width : 100%;
+        height : 0;
+        position : relative;        
+
+        .main-component {
+            min-width : 320px;
+            width : 100%;
+            height : 100vh;
+            overflow-y : auto;
+            position : absolute;
+            top : 0;
+            right : -100%;
+            background-color : rgba(0, 0, 0, 0.699);
+            padding : 1.4rem;
+            transition : right .2s ease-in-out;
+
+            &.active    {
+                right : 0;
+            }
+        }
+        
+    }
+    
+
+
+    
+
+
+}
