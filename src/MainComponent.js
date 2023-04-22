@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 
 export default function MainComponent() {
 
-    const [hidden, setHidden] = useState(false);
+    const [hidden, setHidden] = useState(true);
     const [dimensionsUpdate, setDimensionsUpdate] = useState(0);
     
     const clickHandler = (e) => {
@@ -37,6 +37,12 @@ export default function MainComponent() {
                     <Card/>
                     <Card/>
                     <Card/> */}
+                    {/* <BrowserFrameContainer hidden={hidden} dimensionsUpdate={dimensionsUpdate}>
+                        <Card>
+                            <Button onClick={clickHandler}>Hide it</Button> 
+                        </Card>
+                    </BrowserFrameContainer> */}
+
                     <BrowserFrameContainer hidden={hidden} dimensionsUpdate={dimensionsUpdate}>
                         <Card>
                             <Button onClick={clickHandler}>Hide it</Button> 
