@@ -1,20 +1,24 @@
 import React, {useState, useEffect, useCallback, useContext} from "react";
 import { AppWindowsContext } from "../store/AppWindows";
 
+const { ipcRenderer } = window.require("electron");
 
-export default function useElementDimensions(elRef, hidden, dimensionsUpdate, callback) {
+export default function useElementDimensions() {
 
     const [AppWindowsState] = useContext(AppWindowsContext);
 
     const [stylesObject, setStylesObject] = useState({});
 
+    const updateFrameWindow = (data) => {
+        console.log(data);
+        ipcRenderer.send("update-frame-window", data);
+    }
+
     const getStylesObjectHandler = useCallback((e) => {
 
-        if(elRef && elRef.current)   {
+        if(AppWindowsState.browserFrameElement)   {
 
-            const elObject = elRef.current;
-
-            const currentStyles = getComputedStyle(elObject);
+            const currentStyles = getComputedStyle(AppWindowsState.browserFrameElement);
 
             setStylesObject(prevState => {
 
@@ -25,11 +29,11 @@ export default function useElementDimensions(elRef, hidden, dimensionsUpdate, ca
                     paddingBottom : Number(currentStyles.paddingBottom.replace("px", "")),
                     paddingLeft : Number(currentStyles.paddingLeft.replace("px", "")),
                     paddingRight : Number(currentStyles.paddingRight.replace("px", "")),
-                    offsetTop : elObject.offsetTop,
-                    offsetLeft : elObject.offsetLeft,
+                    offsetTop : AppWindowsState.browserFrameElement.offsetTop,
+                    offsetLeft : AppWindowsState.browserFrameElement.offsetLeft,
                     windowId : AppWindowsState.appWindowId,
                 };
-                callback(updatedStyles);
+                updateFrameWindow(updatedStyles);
                 return updatedStyles;
             });
 
@@ -46,7 +50,7 @@ export default function useElementDimensions(elRef, hidden, dimensionsUpdate, ca
                     windowId : AppWindowsState.appWindowId,
                 };
 
-                callback(updatedStyles);
+                updateFrameWindow(updatedStyles);
                 return updatedStyles;
             });
         }
@@ -68,9 +72,6 @@ export default function useElementDimensions(elRef, hidden, dimensionsUpdate, ca
             window.removeEventListener("load", getStylesObjectHandler);
         }
 
-    }, [hidden, dimensionsUpdate]);
-
-
-    return stylesObject;
+    }, [AppWindowsState.browserFrameElementHidden, AppWindowsState.browserFrameDimensionsUpdate]);
 
 }

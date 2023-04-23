@@ -1,24 +1,30 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import Card from "../Card";
 import useElementDimensions from "../../hooks/useElementDimensions";
+import { AppWindowsContext } from "../../store/AppWindows";
+import { ACTIONS } from "../../store/AppWindows/reducer";
 
-const { ipcRenderer } = window.require("electron");
 
-export default function BrowserFrameContainer({children, hidden, dimensionsUpdate})    {
+
+export default function BrowserFrameContainer({ children })    {
+
+    const [AppWindowsState, dispatch] = useContext(AppWindowsContext);
 
     const cardRef = useRef();
 
-    const updateFrameWindow = (data) => {
-        console.log(data);
-        ipcRenderer.send("update-frame-window", data);
-    }
+    useElementDimensions();
 
-    useElementDimensions(cardRef, hidden, dimensionsUpdate, updateFrameWindow);
+    useEffect(() => {
+        
+        dispatch({type : ACTIONS.SET_BROWSER_FRAME_ELEMENT, payload : cardRef.current});
+
+    }, [cardRef, AppWindowsState.browserFrameElementHidden]);
+
     
     return (
         <div className="cc-browser-frame-div">
             {children}
-            {!hidden && 
+            {!AppWindowsState.browserFrameElementHidden && 
                 <Card className={"cc-browser-container"} elRef={cardRef}></Card>
             }
         </div>

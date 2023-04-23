@@ -743,6 +743,7 @@
                     animation-name: withoutSidebar;
                     animation-duration : .2s;
                     animation-timing-function: ease-in-out;
+                    
                     &.with-side-bar {
                         animation-name: withSidebar;
                     }
@@ -752,10 +753,12 @@
                     .cc-browser-frame-div   {
                         display : flex;
                         flex-direction : column;
+                        
                         height : 100%;
                         .cc-browser-container, .cc-full-height-container  {
                             // background-color : yellow;
                             flex-grow: 1;
+                            
                         }
                     }
                     
