@@ -6,17 +6,20 @@ import {theme} from "./theme";
 
 import "./shared/css/reset.scss";
 import "./shared/css/main.scss";
+import StoreProvider from "./store";
 
 
 const App = () =>{
     return (
-        <ThemeProvider theme={theme}>
-            <ScopedCssBaseline enableColorScheme>
-                <div className="app">
-                    <MainComponent></MainComponent>
-                </div>
-            </ScopedCssBaseline>
-        </ThemeProvider>
+        <StoreProvider>
+            <ThemeProvider theme={theme}>
+                <ScopedCssBaseline enableColorScheme>
+                    <div className="app">
+                        <MainComponent></MainComponent>
+                    </div>
+                </ScopedCssBaseline>
+            </ThemeProvider>
+        </StoreProvider>
     )
 }
 

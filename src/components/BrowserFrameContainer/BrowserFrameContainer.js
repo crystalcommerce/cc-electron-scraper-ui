@@ -4,7 +4,6 @@ import useElementDimensions from "../../hooks/useElementDimensions";
 
 const { ipcRenderer } = window.require("electron");
 
-
 export default function BrowserFrameContainer({children, hidden, dimensionsUpdate})    {
 
     const cardRef = useRef();

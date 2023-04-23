@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import Layout from "./Layout";
 import CardTest from "./test/CardTest";
 import Card from "./components/Card/Card";
@@ -10,6 +10,7 @@ import useBrowserFrameUpdater from "./hooks/useBrowserFrameUpdater";
 export default function MainComponent() {
 
     const {hidden, hideClickHandler, dimensionsUpdate,mainBodyAnimationEndHandler} = useBrowserFrameUpdater();
+
 
     return (
         <div className={`main-component`} >

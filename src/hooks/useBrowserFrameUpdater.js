@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 export default function useBrowserFrameUpdater()    {
     
-    const [hidden, setHidden] = useState(true);
+    const [hidden, setHidden] = useState(false);
     const [dimensionsUpdate, setDimensionsUpdate] = useState(0);
     
     const hideClickHandler = (e) => {

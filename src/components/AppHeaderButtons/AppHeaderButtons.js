@@ -1,16 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Button } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import MinimizeIcon from '@mui/icons-material/Minimize';
 import DoubleSquare from '@mui/icons-material/FilterNone';
 import SingleSquare from '@mui/icons-material/CropSquare';
+import { AppWindowsContext } from "../../store/AppWindows";
 
 const {ipcRenderer} = window.require("electron");
-
 
 export default function AppHeaderButtons()  {
 
     const [variant, setVariant] = useState("default");
+
+    const [AppWindowsState] = useContext(AppWindowsContext);
     
     const closeButtonMouseOverHandler = (e) => {
         setVariant(state => "contained");
@@ -24,13 +26,15 @@ export default function AppHeaderButtons()  {
         e.preventDefault();
 
         ipcRenderer.send("close-application", {
-            message : "Closing the application"
+            message : "Closing the application",
+            windowId : AppWindowsState.appWindowId,
         })
     };
 
     const minimizeAppHandler = (e) => {
         ipcRenderer.send("minimize-application", {
-            message : "Minimizing the application"
+            message : "Minimizing the application",
+            windowId : AppWindowsState.appWindowId,
         })
     };
     
@@ -42,6 +46,7 @@ export default function AppHeaderButtons()  {
         setFullScreen(prev => {
             ipcRenderer.send("full-screen-application", {
                 message : "fullScreen App the application",
+                windowId : AppWindowsState.appWindowId,
                 state : !prev
             });
 
@@ -49,6 +54,11 @@ export default function AppHeaderButtons()  {
         });
     }
 
+    useEffect(() => {
+
+        console.log(AppWindowsState);
+
+    }, [AppWindowsState]);
 
     return (
         <div className="cc-app-window-buttons-container">

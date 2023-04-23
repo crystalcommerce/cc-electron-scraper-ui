@@ -1,10 +1,14 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback, useContext} from "react";
+import { AppWindowsContext } from "../store/AppWindows";
+
 
 export default function useElementDimensions(elRef, hidden, dimensionsUpdate, callback) {
 
+    const [AppWindowsState] = useContext(AppWindowsContext);
+
     const [stylesObject, setStylesObject] = useState({});
 
-    function getStylesObjectHandler(e){
+    const getStylesObjectHandler = useCallback((e) => {
 
         if(elRef && elRef.current)   {
 
@@ -23,6 +27,7 @@ export default function useElementDimensions(elRef, hidden, dimensionsUpdate, ca
                     paddingRight : Number(currentStyles.paddingRight.replace("px", "")),
                     offsetTop : elObject.offsetTop,
                     offsetLeft : elObject.offsetLeft,
+                    windowId : AppWindowsState.appWindowId,
                 };
                 callback(updatedStyles);
                 return updatedStyles;
@@ -38,6 +43,7 @@ export default function useElementDimensions(elRef, hidden, dimensionsUpdate, ca
                     paddingBottom : 0,
                     paddingLeft : 0,
                     paddingRight : 0,
+                    windowId : AppWindowsState.appWindowId,
                 };
 
                 callback(updatedStyles);
@@ -45,7 +51,9 @@ export default function useElementDimensions(elRef, hidden, dimensionsUpdate, ca
             });
         }
 
-    }
+    }, [stylesObject]);
+
+    
 
     useEffect(() => {
 
