@@ -1,13 +1,11 @@
-import { Button } from "@mui/material";
 import React from "react";
+import { Button } from "@mui/material";
+import useNewAppWindowHandler from "../../hooks/useNewAppWindowHandler";
 
-const { ipcRenderer } = window.require("electron");
 
 export default function HeaderNav() {
 
-    const newAppInstanceClickHandler = (e) => {
-        ipcRenderer.send("new-app-instance", {message : "Please spawn a new app."});
-    }
+    const newAppInstanceClickHandler = useNewAppWindowHandler()
 
     return (
         <nav className="cc-header-nav">
