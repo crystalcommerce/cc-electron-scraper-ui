@@ -5,7 +5,6 @@ const ACTIONS = {
     "SET_FRAME_WINDOW_STYLES" : "set-frame-window-styles",
     "SET_BROWSER_FRAME_ELEMENT" : "set-browser-frame-element",
     "SET_BROWSER_FRAME_HIDDEN" : "set-browser-frame-hidden",
-    "SET_BROWSER_FRAME_DIMENSIONS_UPDATE" : "set-browser-frame-dimensions-update",
 
     // setting sidebar show and hide functions
     "SET_MAIN_COMPONENT_CLASS_NAME": "set-main-component-class-name",

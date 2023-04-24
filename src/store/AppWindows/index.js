@@ -16,6 +16,7 @@ ipcRenderer.once("app-window-id", (e, data) => {
 const AppWindowsContext = createContext(null);
 
 const initialState = {
+    browserFrameElement : null,
     browserFrameElementHidden : false,
     browserFrameDimensionsUpdate : 0,
     mainComponentClassName : "with-side-bar", // with-side-bar if sidebarHidden false

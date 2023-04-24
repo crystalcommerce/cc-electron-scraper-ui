@@ -3,6 +3,8 @@ import { AppWindowsContext } from "../store/AppWindows";
 
 const { ipcRenderer } = window.require("electron");
 
+let interval = null;
+
 export default function useElementDimensions() {
 
     const [AppWindowsState] = useContext(AppWindowsContext);
@@ -12,7 +14,28 @@ export default function useElementDimensions() {
     const updateFrameWindow = (data) => {
         console.log(data);
         ipcRenderer.send("update-frame-window", data);
-    }
+    };
+
+    const animationStartHandler = () =>   {
+
+        if(interval)    {
+            clearInterval(interval);
+        }
+
+        if(AppWindowsState.browserFrameElement) {
+            interval = setInterval(() => {
+                getStylesObjectHandler();
+            }, 1);
+        }
+
+    };
+
+    const animationEndHandler = () =>   {
+        if(interval)    {
+            clearInterval(interval);
+        }
+        getStylesObjectHandler();
+    };    
 
     const getStylesObjectHandler = useCallback((e) => {
 
@@ -74,4 +97,6 @@ export default function useElementDimensions() {
 
     }, [AppWindowsState.browserFrameElementHidden, AppWindowsState.browserFrameDimensionsUpdate]);
 
+
+    return {animationStartHandler, animationEndHandler};
 }
