@@ -1,9 +1,12 @@
-import React from "react";
-import { Button } from "@mui/material";
+import React, { useContext } from "react";
+import { Button, Typography } from "@mui/material";
 import useNewAppWindowHandler from "../../hooks/useNewAppWindowHandler";
+import { AppWindowsContext } from "../../store/AppWindows";
 
 
 export default function HeaderNav() {
+
+    const [AppWindowsState] = useContext(AppWindowsContext);
 
     const newAppInstanceClickHandler = useNewAppWindowHandler()
 
@@ -30,7 +33,14 @@ export default function HeaderNav() {
                         + New App Instance
                     </Button>
                 </li>
+
+                <li>
+                <div>
+                    <Typography>{AppWindowsState.appWindowId}</Typography>
+                </div>
+                </li>
             </ul>
+            
         </nav>
     )
 }

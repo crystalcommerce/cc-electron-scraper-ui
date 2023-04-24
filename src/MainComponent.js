@@ -21,7 +21,9 @@ export default function MainComponent() {
     }
 
     useEffect(() => {
-        console.log(AppWindowsState)
+        for(let key in AppWindowsState) {
+            console.log(`${key} : ${AppWindowsState[key]}`);
+        }
     }, [AppWindowsState]);
 
     // --- end of temp code
