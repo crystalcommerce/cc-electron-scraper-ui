@@ -9,6 +9,6 @@ export default function Main({children, className})  {
     const [AppWindowsState] = useContext(AppWindowsContext);
 
     return (
-        <main onAnimationEndCapture={mainBodyAnimationEndHandler} className={`cc-main-container ${AppWindowsState.mainComponentClassName}`}>{children}</main>
+        <main onAnimationIteration={mainBodyAnimationEndHandler} className={`cc-main-container ${AppWindowsState.mainComponentClassName}`}>{children}</main>
     )
 }
