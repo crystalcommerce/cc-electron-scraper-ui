@@ -1,44 +1,39 @@
 import React, { useContext } from "react";
-import { Button, Typography } from "@mui/material";
-import useNewAppWindowHandler from "../../hooks/useNewAppWindowHandler";
-import { AppWindowsContext } from "../../store/AppWindows";
+import { Typography } from "@mui/material";
+import { GlobalStateContext } from "../../store/GlobalState";
+import NavButton from "../NavButton";
 
 
 export default function HeaderNav() {
 
-    const [AppWindowsState] = useContext(AppWindowsContext);
+    const [GlobalState] = useContext(GlobalStateContext);
 
-    const newAppInstanceClickHandler = useNewAppWindowHandler()
+
 
     return (
         <nav className="cc-header-nav">
             <ul>
-                <li>
-                    <a href="#" className="selected">
-                        Hello there
-                    </a>
-                </li>
-                <li>
-                    <a href="#" className="active">
-                        Hello there
-                    </a>
-                </li>
-                <li>
-                    <a href="#" className="disabled">
-                        Hello there
-                    </a>
-                </li>
-                <li>
-                    <Button variant="contained" onClick={newAppInstanceClickHandler}>
-                        + New App Instance
-                    </Button>
-                </li>
+                {
 
-                <li>
-                <div>
-                    <Typography>{AppWindowsState.appWindowId}</Typography>
-                </div>
-                </li>
+                    GlobalState.NavItems.filter(item => item.location === "header").map(item => {
+                        return(
+                            <li key={item.id}>
+                                <NavButton page={item.page} >
+                                    {item.label} - {item.id}
+                                </NavButton>
+                            </li>
+                        );
+                    })
+
+                }
+
+                
+                {/* <li>
+                    <NavButton page={"Browser Scraper"}>
+                        Browser Scraper
+                    </NavButton>
+                </li> */}
+
             </ul>
             
         </nav>

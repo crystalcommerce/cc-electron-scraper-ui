@@ -23572,7 +23572,7 @@ export default function CardTest()  {
 
 
     return (
-        
+        <>
         <EmptyCard className="main-empty-card cc-flex cc-row stretch">
             <Card className="empty-card-container" classObject={{
                 xs : "col-12",
@@ -23951,6 +23951,6 @@ export default function CardTest()  {
             </Card>
         </EmptyCard>
         
-       
+        </>
     )
 }

@@ -1,23 +1,22 @@
 import React, { useContext } from "react";
 import { IconButton } from "@mui/material";
-import HeaderNav from "../HeaderNav";
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import { AppWindowsContext } from "../../store/AppWindows";
-import useSidebarClickHandler from "../../hooks/useSidebarClickHandler";
+import { GlobalStateContext } from "../../store/GlobalState";
+import useSidebarHook from "../../hooks/useSidebarHook";
 
 export default function HeaderLower({children})   {
 
-    const [AppWindowsState] = useContext(AppWindowsContext);
+    const [GlobalState] = useContext(GlobalStateContext);
 
-    const {showSidebarClickHandler} = useSidebarClickHandler();
+    const {showSidebarClickHandler} = useSidebarHook();
 
     return (
         <div className="lower-header">
             <div className="sidebar-menu-button-container">
                 <IconButton onClick={showSidebarClickHandler} color="primary" aria-label="add to shopping cart">
-                    {!AppWindowsState.sidebarHidden && <MenuOpenIcon/>}
-                    {AppWindowsState.sidebarHidden && <MenuIcon/>}
+                    {!GlobalState.Components.Sidebar.hidden && <MenuOpenIcon/>}
+                    {GlobalState.Components.Sidebar.hidden && <MenuIcon/>}
                 </IconButton>
             </div>
             {children}

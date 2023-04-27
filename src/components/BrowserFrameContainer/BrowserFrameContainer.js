@@ -1,32 +1,39 @@
 import React, { useEffect, useRef, useContext } from "react";
 import Card from "../Card";
-import useElementDimensions from "../../hooks/useElementDimensions";
-import { AppWindowsContext } from "../../store/AppWindows";
-import { ACTIONS } from "../../store/AppWindows/reducer";
+import useBrowserFrameHook from "../../hooks/useBrowserFrameHook";
+import { GlobalStateContext } from "../../store/GlobalState";
+import { ACTIONS } from "../../store/GlobalState/reducer";
 
 
 
 export default function BrowserFrameContainer({ children })    {
 
-    const [AppWindowsState, dispatch] = useContext(AppWindowsContext);
+    const [GlobalState, dispatch] = useContext(GlobalStateContext);
 
     const cardRef = useRef();
 
-    useElementDimensions();
+    useBrowserFrameHook();
 
     useEffect(() => {
         
-        dispatch({type : ACTIONS.SET_BROWSER_FRAME_ELEMENT, payload : cardRef.current});
+        dispatch({
+            type : ACTIONS.UPDATE_COMPONENTS, 
+            payload : {
+                BrowserFrameContainer : {
+                    element : cardRef.current,
+                }
+            }
+        });
 
-    }, [cardRef, AppWindowsState.browserFrameElementHidden]);
+    }, [cardRef, GlobalState.Components.BrowserFrameContainer.hidden]);
 
     
     return (
-        <div className="cc-browser-frame-div">
+        <div className={`cc-browser-frame-div ${GlobalState.Components.BrowserFrameContainer.hidden ? "hidden" :""}`}>
             {children}
-            {!AppWindowsState.browserFrameElementHidden && 
-                <Card className={"cc-browser-container"} elRef={cardRef}></Card>
-            }
+
+            <Card className={`cc-browser-container `} elRef={cardRef}></Card>
+            
         </div>
     ); 
 }

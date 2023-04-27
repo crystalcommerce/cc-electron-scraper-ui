@@ -1,5 +1,5 @@
 import React from "react";
-import { AppWindowsProvider } from "./AppWindows";
+import { GlobalStateProvider } from "./GlobalState";
 
 
 
@@ -7,9 +7,9 @@ export default function StoreProvider({children}) {
 
     return (
         <>
-        <AppWindowsProvider>
+        <GlobalStateProvider>
             {children}
-        </AppWindowsProvider>
+        </GlobalStateProvider>
         </>
     )
 

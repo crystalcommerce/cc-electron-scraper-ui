@@ -1,13 +1,19 @@
 import React from "react";
 import BrowserFrameContainer from "../../components/BrowserFrameContainer";
+import useActivePagesHook from "../../hooks/useActivePagesHook";
 
 
-export default function BrowserScraper({hidden, dimensionsUpdate, children})   {
+
+export default function BrowserScraper({children})   {
+
+    const isActive = useActivePagesHook("Browser Scraper");
     
     return (
-        <BrowserFrameContainer hidden={hidden} dimensionsUpdate={dimensionsUpdate}>
-            {children}
-        </BrowserFrameContainer>
+        <>
+            {isActive && <BrowserFrameContainer>
+                {children}
+            </BrowserFrameContainer>}
+        </>
     );
     
 }

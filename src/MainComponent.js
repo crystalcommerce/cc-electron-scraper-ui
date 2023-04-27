@@ -4,51 +4,36 @@ import CardTest from "./test/CardTest";
 import Card from "./components/Card/Card";
 import { Button } from "@mui/material";
 import BrowserScraper from "./pages/BrowserScraper";
-import { AppWindowsContext } from "./store/AppWindows";
-import { ACTIONS } from "./store/AppWindows/reducer";
+import { GlobalStateContext } from "./store/GlobalState";
+import { ACTIONS } from "./store/GlobalState/reducer";
+import Home from "./pages/home/Home";
+import useBrowserFrameHook from "./hooks/useBrowserFrameHook";
 
 
 export default function MainComponent() {
 
-    // const {mainBodyAnimationEndHandler} = useBrowserFrameUpdater();
+    const [ GlobalState ] = useContext(GlobalStateContext);
 
-    //  --- start of temp code
-
-    const [AppWindowsState, dispatch] = useContext(AppWindowsContext);
-
-    const clickHandler = (e) => {
-        dispatch({type : ACTIONS.SET_BROWSER_FRAME_HIDDEN, payload : !AppWindowsState.browserFrameElementHidden})
-    }
-
-    useEffect(() => {
-        for(let key in AppWindowsState) {
-            console.log(`${key} : ${AppWindowsState[key]}`);
-        }
-    }, [AppWindowsState]);
-
-    // --- end of temp code
+    const {hideBrowserFrameContainer} = useBrowserFrameHook()
 
     return (
         <div className={`main-component`} >
 
             <div className="inner-wrapper">
                 <Layout>
-                    {/* <Card/>
-                    <Card/>
-                    <Card/>*/}
+                    {/* 
+                         
+                         These are the pages that are available.
 
-                    {/* <BrowserScraper hidden={hidden} dimensionsUpdate={dimensionsUpdate} > */}
+                    */}
                     <BrowserScraper>
-
-                        {/* start of temporary component */}
-                        {/* this will probably go to the page component of the browser */}
                         <Card>
-                            <Button onClick={clickHandler}>{AppWindowsState.browserFrameElementHidden ? "Reveal Browser Frame" : "hide browser frame"}</Button> 
+                            <Button onClick={hideBrowserFrameContainer}>{GlobalState.Components.BrowserFrameContainer.hidden ? "Reveal Browser Frame" : "hide browser frame"}</Button> 
                         </Card>
-                        {/* end of temporary component */}
-
                     </BrowserScraper>
-
+                    <Home>
+                        <CardTest  />
+                    </Home>
                 </Layout>
             
             </div>

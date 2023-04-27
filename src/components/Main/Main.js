@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { AppWindowsContext } from "../../store/AppWindows";
-import useElementDimensions from "../../hooks/useElementDimensions";
+import { GlobalStateContext } from "../../store/GlobalState";
+import useBrowserFrameHook from "../../hooks/useBrowserFrameHook";
 
 
 export default function Main({children, className})  {
 
-    const {animationStartHandler, animationEndHandler } = useElementDimensions();
-    const [AppWindowsState] = useContext(AppWindowsContext);
+    const {animationStartHandler, animationEndHandler } = useBrowserFrameHook();
+    const [GlobalState] = useContext(GlobalStateContext);
 
     return (
-        <main onAnimationStart={animationStartHandler} onAnimationEnd={animationEndHandler} className={`cc-main-container ${AppWindowsState.mainComponentClassName}`}>{children}</main>
+        <main onAnimationStart={animationStartHandler} onAnimationEnd={animationEndHandler} className={`cc-main-container ${GlobalState.Components.Main.toggleClassName} ${className || ""}`}>{children}</main>
     )
 }

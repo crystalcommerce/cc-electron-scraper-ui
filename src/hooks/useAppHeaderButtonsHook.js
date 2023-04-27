@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
-import { AppWindowsContext } from "../store/AppWindows";
-import { ACTIONS } from "../store/AppWindows/reducer";
+import { GlobalStateContext } from "../store/GlobalState";
 
 const {ipcRenderer} = window.require("electron");
 
 export default function useAppButtonHandlers()   {
 
-    const [AppWindowsState] = useContext(AppWindowsContext);
+    const [GlobalState] = useContext(GlobalStateContext);
 
     const [variant, setVariant] = useState("default");
     
@@ -23,14 +22,14 @@ export default function useAppButtonHandlers()   {
 
         ipcRenderer.send("close-application", {
             message : "Closing the application",
-            windowId : AppWindowsState.appWindowId,
+            windowId : GlobalState.AppWindowId,
         })
     };
 
     const minimizeAppHandler = (e) => {
         ipcRenderer.send("minimize-application", {
             message : "Minimizing the application",
-            windowId : AppWindowsState.appWindowId,
+            windowId : GlobalState.AppWindowId,
         })
     };
     
@@ -42,7 +41,7 @@ export default function useAppButtonHandlers()   {
         setFullScreen(prev => {
             ipcRenderer.send("full-screen-application", {
                 message : "fullScreen App the application",
-                windowId : AppWindowsState.appWindowId,
+                windowId : GlobalState.AppWindowId,
                 state : !prev
             });
 

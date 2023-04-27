@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
-import { AppWindowsContext } from "../../store/AppWindows";
+import React, { useContext } from "react";
+import { GlobalStateContext } from "../../store/GlobalState";
 
 export default function Sidebar({children, className}) {
 
-    const [AppWindowsState] = useContext(AppWindowsContext);
+    const [GlobalState] = useContext(GlobalStateContext);
 
     return (
-        <aside className={`cc-main-sidebar ${AppWindowsState.sidebarHidden ? "" : "show"} ${className || ""}`}>{children}</aside>
+        <aside className={`cc-main-sidebar ${GlobalState.Components.Sidebar.hidden ? "" : "show"} ${className ? className  : ""}`}>{children}</aside>
     )
 
 }
