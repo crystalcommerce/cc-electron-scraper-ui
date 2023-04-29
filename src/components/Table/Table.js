@@ -20,6 +20,7 @@ import Modal from '../Modal';
 
 // utils
 import {createColumns, getAllObjectKeys} from "../../utilities";
+import NativeImage from '../NativeImage/NativeImage';
 
 export default function StickyHeadTable({tableCaption, tableData, excludedProps, uniqueDataProp, styledColumnObjects, showActionButtons, showIndex}) {
 
@@ -198,7 +199,7 @@ export default function StickyHeadTable({tableCaption, tableData, excludedProps,
                                         // show images here...
 
                                         value = row.imageUris.map((item, index) => {
-                                            return <img key={`${index}-${item}`} src={item} />
+                                            return <NativeImage key={`${index}-${item}`} src={item} />
                                         });
                                     }
 

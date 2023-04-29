@@ -1,6 +1,7 @@
 import React, {useRef, useState} from "react";
 import useMaxImageHeight from "../../hooks/useMaxImageDimensions";
 import {NavigateNext as NavigateNextIcon, NavigateBefore as NavigateBeforeIcon} from '@mui/icons-material';
+import NativeImage from "../NativeImage/NativeImage";
 
 export default function ImageSlider({imageUris, className})   {
 
@@ -34,7 +35,7 @@ export default function ImageSlider({imageUris, className})   {
             {imageUris.map((item, index) => {
                 return (
                     <div key={`${index}-${item}`} className={`cc-image-container ${index === currentImage ? "current-image" : "hidden"}`}>
-                        <img  src={item} />
+                        <NativeImage  src={item} />
                     </div>
                 )
             })}
