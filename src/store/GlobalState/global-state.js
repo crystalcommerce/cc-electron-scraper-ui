@@ -1,16 +1,37 @@
 import { generateUuid } from "../../utilities";
 
+
+
 export const globalState = {
     AppWindowId : null,
-    FrameWindow : {
-        windowId : null,
-        parentWindowId : null,
-        dimensions : {}
-    },
-    BrowserFrames : [
+    AppWindow : {
+        isOnFullScreen : false,
+    }, 
+    FrameWindows : [
+        // {
+        //     windowId : null,
+        //     parentWindowId : null,
+        //     dimensions : {},
+        //     componentId : "BrowserFrame",
+        //     element : null,
+        //     toggleClassName : null,
+        //     hidden : false,
+        // },
+        // {
+        //     windowId : null,
+        //     parentWindowId : null,
+        //     dimensions : {},
+        //     componentId : "ScraperFrame",
+        //     element : null,
+        //     toggleClassName : null,
+        //     hidden : false,
+        // }
+    ],
+    BrowserWindows : [
         {
             windowId : null,
-            type : "single" || "multi",
+            windowType : "scraper" || "browser",
+            scraperType : "singleProduct" || "productSets" || "categorizedSets",
             parentWindowId : null,
             dimensions : {}
         }
@@ -21,6 +42,7 @@ export const globalState = {
             type : "single" || "set" || "categorized-set",
             parentWindowId : null,
             dimensions : {},
+            
         }
     ],
     Components : {
@@ -48,8 +70,14 @@ export const globalState = {
             id : generateUuid(),
         },
         {
-            label : "Browser Frame",
-            page : "Browser Scraper",
+            label : "Internet",
+            page : "Internet Browser",
+            location : "header",
+            id : generateUuid(),
+        },
+        {
+            label : "Scraper",
+            page : "Scraper Frame",
             location : "header",
             id : generateUuid(),
         },
@@ -67,9 +95,14 @@ export const globalState = {
             isActive : false,
         },
         {
-            label : "Browser Frame",
-            page : "Browser Scraper",
+            label : "Internet",
+            page : "Internet Browser",
             isActive : true,
-        }
+        },
+        {
+            label : "Scraper",
+            page : "Scraper Frame",
+            isActive : false,
+        },
     ],
 };

@@ -19,15 +19,13 @@ export default function HeaderNav() {
                         return(
                             <li key={item.id}>
                                 <NavButton page={item.page} >
-                                    {item.label} - {item.id}
+                                    {item.label}{/*  - {item.id} */}
                                 </NavButton>
                             </li>
                         );
                     })
 
                 }
-
-                
                 {/* <li>
                     <NavButton page={"Browser Scraper"}>
                         Browser Scraper

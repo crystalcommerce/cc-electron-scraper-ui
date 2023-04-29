@@ -1,11 +1,32 @@
 const ACTIONS = {
-    "SET_APP_WINDOW_ID" : "set-app-window-id",
-    "UPDATE_FRAME_WINDOW" : "update-frame-window",
+    "SET_APP_WINDOW_DETAILS" : "set-app-window-details",
+    "UPDATE_FRAME_WINDOWS" : "update-frame-window",
     "UPDATE_COMPONENTS" : "update-components",
     "SET_ACTIVE_PAGE" : "set-active-page",
 
 
     "CREATE_FRAME_WINDOW" : "create-frame-window",
+}
+
+function setAppWindowDetails(state, action) {
+    let {AppWindow, AppWindowId} = state;
+
+    // console.log(action.payload);
+
+    if(action.payload.AppWindowId)  {
+        AppWindowId = action.payload.AppWindowId;
+    }
+    
+    if(action.payload.AppWindow)    {
+        for(let key in action.payload.AppWindow)    {
+            AppWindow[key] = action.payload.AppWindow[key];
+        }
+    }
+
+    console.log(state);
+    
+    return {...state};
+
 }
 
 function updateComponents(state, action)    {
@@ -24,10 +45,26 @@ function updateComponents(state, action)    {
 }
 
 function updateFrameWindow(state, action)    {
-    let { FrameWindow } = state;
+    let { FrameWindows } = state;
 
-    for(let key in action.payload)  {
-        FrameWindow[key] = action.payload[key];
+    // console.log(FrameWindows, action.payload.FrameWindows);
+    
+
+    for(let FrameWindow of action.payload.FrameWindows) {
+
+        let foundFrame = FrameWindows.find(frameWindow => frameWindow.componentId === FrameWindow.componentId);
+
+        if(foundFrame)  {
+            // if it's there we update
+            for(let key in FrameWindow) {
+                foundFrame[key] = FrameWindow[key];
+            }
+        } else  {
+            // else we push
+            // we set the defaults
+            FrameWindows.push(FrameWindow);
+        }
+        
     }
 
     return {...state};
@@ -48,11 +85,10 @@ function setActivePage(state, action)    {
 const reducer = (state, action) => {
 
     switch(action.type) {
-        case ACTIONS.SET_APP_WINDOW_ID :
-            return {...state, AppWindowId : action.payload};
+        case ACTIONS.SET_APP_WINDOW_DETAILS :
+            return setAppWindowDetails(state, action);
 
-
-        case ACTIONS.UPDATE_FRAME_WINDOW :
+        case ACTIONS.UPDATE_FRAME_WINDOWS :
             return updateFrameWindow(state, action);
 
         case ACTIONS.UPDATE_COMPONENTS :

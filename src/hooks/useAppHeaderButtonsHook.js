@@ -1,11 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalStateContext } from "../store/GlobalState";
+import { ACTIONS } from "../store/GlobalState/reducer";
 
 const {ipcRenderer} = window.require("electron");
 
+
 export default function useAppButtonHandlers()   {
 
-    const [GlobalState] = useContext(GlobalStateContext);
+    const [GlobalState, dispatch] = useContext(GlobalStateContext);
 
     const [variant, setVariant] = useState("default");
     
@@ -34,20 +36,30 @@ export default function useAppButtonHandlers()   {
     };
     
 
-    const [fullScreen, setFullScreen] = useState(false);
-
     const fullScreenClickHandler = (e) => {
-        
-        setFullScreen(prev => {
-            ipcRenderer.send("full-screen-application", {
-                message : "fullScreen App the application",
-                windowId : GlobalState.AppWindowId,
-                state : !prev
-            });
 
-            return !prev;
+        ipcRenderer.send("full-screen-application", {
+            message : "fullScreen App the application",
+            windowId : GlobalState.AppWindowId,
+            state : !GlobalState.AppWindow.isOnFullScreen,
+        });
+    };
+
+    const setFullScreenState = (e, data) => {
+        console.log(data);
+        dispatch({
+            type : ACTIONS.SET_APP_WINDOW_DETAILS,
+            payload : data
         });
     }
 
-    return {fullScreenClickHandler, closeButtonMouseOutHandler, closeButtonMouseOverHandler, closeAppHandler, minimizeAppHandler, fullScreen, variant}
+    useEffect(() => {
+        
+        ipcRenderer.on("set-full-screen-state", setFullScreenState);
+
+        return () => ipcRenderer.removeListener("set-full-screen-state", setFullScreenState);
+
+    }, [GlobalState]);
+
+    return {fullScreenClickHandler, closeButtonMouseOutHandler, closeButtonMouseOverHandler, closeAppHandler, minimizeAppHandler, variant}
 }

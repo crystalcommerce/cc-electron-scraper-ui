@@ -13,7 +13,7 @@ import { GlobalStateContext } from "../../store/GlobalState";
 export default function AppHeaderButtons()  {
 
     const [GlobalState] = useContext(GlobalStateContext);
-    const {fullScreenClickHandler, closeButtonMouseOutHandler, closeButtonMouseOverHandler, closeAppHandler, minimizeAppHandler, fullScreen, variant} = useAppHeaderButtonsHook();
+    const {fullScreenClickHandler, closeButtonMouseOutHandler, closeButtonMouseOverHandler, closeAppHandler, minimizeAppHandler, variant} = useAppHeaderButtonsHook();
     const newAppInstanceClickHandler = useNewAppWindowHandler();
 
     return (
@@ -32,10 +32,10 @@ export default function AppHeaderButtons()  {
                 </Button>
 
                 <Button size="small" variant="default" className={`app-header-button`} onClick={fullScreenClickHandler}>
-                    {!fullScreen &&
+                    {!GlobalState.AppWindow.isOnFullScreen &&
                         <SingleSquare className="icon"  />
                     }
-                    {fullScreen &&
+                    {GlobalState.AppWindow.isOnFullScreen &&
                         <DoubleSquare className="icon" />
                     }
                 </Button>

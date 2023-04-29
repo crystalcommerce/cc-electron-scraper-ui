@@ -14,7 +14,7 @@ export default function HeaderLower({children})   {
     return (
         <div className="lower-header">
             <div className="sidebar-menu-button-container">
-                <IconButton onClick={showSidebarClickHandler} color="primary" aria-label="add to shopping cart">
+                <IconButton onClick={showSidebarClickHandler} color="primary" aria-label="show-side-bar">
                     {!GlobalState.Components.Sidebar.hidden && <MenuOpenIcon/>}
                     {GlobalState.Components.Sidebar.hidden && <MenuIcon/>}
                 </IconButton>

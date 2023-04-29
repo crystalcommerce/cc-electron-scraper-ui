@@ -4,33 +4,34 @@ import { globalState } from "./global-state";
 
 const { ipcRenderer } = window.require("electron");
 
-let appWindowId = null;
+let AppWindowId = null,
+    AppWindow = null;
 
-ipcRenderer.once("app-window-id", (e, data) => {
+ipcRenderer.once("app-window-details", (e, data) => {
     console.log({
-        message : "we have retrieved the app window id",
-        windowId : data,
+        message : "we have retrieved the app window details",
+        appWindowDetails : data,
     });
-    appWindowId = data;
+    AppWindowId = data.AppWindowId;
+    AppWindow = data.AppWindow;
 });
 
 const GlobalStateContext = createContext(null);
 
 const GlobalStateProvider = ({children}) => {
 
-    const [state, dispatch] = useReducer(reducer, globalState);
+    const [state, dispatch] = useReducer(reducer, {...globalState, AppWindowId, AppWindow});
 
-    const checkAppWindowId = useCallback(() => {
-        if(appWindowId) {
-            dispatch({type : ACTIONS.SET_APP_WINDOW_ID, payload : appWindowId})
-        } else  {
-            checkAppWindowId();
-        }
-    });
+    
 
     useEffect(() => {
-        checkAppWindowId();
-    }, []);
+
+        
+
+
+
+        // checkAppWindowId();
+    }, [])
 
     return (
         <GlobalStateContext.Provider value={[state, dispatch]}>
