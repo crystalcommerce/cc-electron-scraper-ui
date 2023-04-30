@@ -6,6 +6,8 @@ export const globalState = {
     AppWindowId : null,
     AppWindow : {
         isOnFullScreen : false,
+        isLoading : false,
+        isFrameDelayedLoading : false,
     }, 
     FrameWindows : [
         // {
@@ -67,17 +69,27 @@ export const globalState = {
             label : "Home",
             page : "Home",
             location : "header",
-            id : generateUuid(),
-        },
-        {
-            label : "Internet",
-            page : "Internet Browser",
-            location : "header",
+            hasFrameWindow : false,
             id : generateUuid(),
         },
         {
             label : "Scraper",
             page : "Scraper Frame",
+            hasFrameWindow : true,
+            location : "header",
+            id : generateUuid(),
+        },
+        {
+            label : "Internet",
+            page : "Internet Browser",
+            hasFrameWindow : true,
+            location : "header",
+            id : generateUuid(),
+        },
+        {
+            label : "Users",
+            page : "Manage Users",
+            hasFrameWindow : false,
             location : "header",
             id : generateUuid(),
         },
@@ -92,17 +104,23 @@ export const globalState = {
         {
             label : "Home",
             page : "Home",
-            isActive : false,
+            isActive : true,
         },
         {
             label : "Internet",
             page : "Internet Browser",
-            isActive : true,
+            isActive : false,
         },
         {
             label : "Scraper",
             page : "Scraper Frame",
             isActive : false,
         },
+        {
+            label : "Users",
+            page : "Manage Users",
+            isActive : false,
+        }
     ],
+
 };

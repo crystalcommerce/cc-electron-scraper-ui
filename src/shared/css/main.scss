@@ -19,7 +19,7 @@
 
     *******************************/
 
-    z-index: 7777777777777777;
+    z-index: 77747;
     width : 100%;
     height : 0;
     font-family : inherit;
@@ -289,7 +289,7 @@
     $scrollbar-thumb-hover-bg : rgb(177, 194, 206);
 
 
-    .cc-modal-container {
+    .cc-modal-container, .cc-app-loading-container {
         position : fixed;
         background-color : #0e1b2eb7;
         z-index : 3;
@@ -310,6 +310,11 @@
         }
         
     }
+
+    .cc-app-loading-container   {
+        z-index : 5
+    }
+
 
     .cc-image-slider    {
         display : flex;

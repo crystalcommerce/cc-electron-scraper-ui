@@ -11,7 +11,12 @@ export default function useFrameWindowHook(componentId, cardRef)   {
 
     const {getDimensions} = useElementDimensions();
 
-    const getFrameWindow = () => {
+    const getFrameWindow = (isHidden = false) => {
+
+
+        if(GlobalState.AppWindow.isLoading)   {
+            return;
+        }
 
         const foundFrame = GlobalState.FrameWindows.find(item => item.componentId === componentId);
 
@@ -22,15 +27,19 @@ export default function useFrameWindowHook(componentId, cardRef)   {
                 browserFrameDimensions : getDimensions(el),
                 parentWindowId : GlobalState.AppWindowId,
                 windowId : componentId,
+                isHidden : isHidden,
             });
-
         }
         
     }
 
+    const eventCallback = (e, isHidden = false) => {
+        getFrameWindow(isHidden);
+    }
+
     // update from the backend;
     const getFrameWindowUpdate = (e, data) => {
-        // console.log(data);
+        // setIsUpdating(false);
     }
 
     useEffect(() => {
@@ -53,7 +62,6 @@ export default function useFrameWindowHook(componentId, cardRef)   {
                 ]
             }
         });
-
         
         // update the global state on unload;
         return () => {
@@ -76,33 +84,35 @@ export default function useFrameWindowHook(componentId, cardRef)   {
         }
 
     }, [cardRef]);
-
-
+    
     useEffect(() => {
 
-        getFrameWindow();
+        const foundFrame = GlobalState.FrameWindows.find(item => item.componentId === componentId);
 
-        window.addEventListener("resize", getFrameWindow);
-        window.addEventListener("load", getFrameWindow);
-
-        return () => {
+        if(foundFrame && !foundFrame.hidden)  {
             getFrameWindow();
-            window.removeEventListener("resize", getFrameWindow);
-            window.removeEventListener("load", getFrameWindow);
-        };
+        }
 
     }, [GlobalState]);
-    
-    // logging the global state;
+
     useEffect(() => {
+
+        
+
+        window.addEventListener("resize", eventCallback);
+        window.addEventListener("load", eventCallback);
 
         // get the window details from the backend;
         ipcRenderer.on("frame-window-details", getFrameWindowUpdate);
 
         return () => {
+            window.removeEventListener("resize", eventCallback);
+            window.removeEventListener("load", eventCallback);
             // remove the listener on unload
             ipcRenderer.removeListener("frame-window-details", getFrameWindowUpdate);
-        }
+
+            getFrameWindow(true);
+        };
 
     }, []);
 

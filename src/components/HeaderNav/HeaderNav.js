@@ -18,9 +18,10 @@ export default function HeaderNav() {
                     GlobalState.NavItems.filter(item => item.location === "header").map(item => {
                         return(
                             <li key={item.id}>
-                                <NavButton page={item.page} >
+                                <NavButton page={item.page} hasFrameWindow={item.hasFrameWindow} >
                                     {item.label}{/*  - {item.id} */}
                                 </NavButton>
+
                             </li>
                         );
                     })

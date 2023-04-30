@@ -9,7 +9,7 @@ export default function useMainHook()   {
     const [GlobalState] = useContext(GlobalStateContext);
     const { getDimensions } = useElementDimensions();
 
-    const animationCallback = () => {
+    const animationCallback = (isActive = true) => {
         const activeFrameWindow = GlobalState.FrameWindows.find(item => !item.hidden);
 
         if(activeFrameWindow && activeFrameWindow.element) {
@@ -17,6 +17,7 @@ export default function useMainHook()   {
                 browserFrameDimensions : getDimensions(activeFrameWindow.element),
                 parentWindowId : GlobalState.AppWindowId,
                 windowId : activeFrameWindow.componentId,
+                isActive,
             });
 
         }

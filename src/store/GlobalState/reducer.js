@@ -1,6 +1,12 @@
 const ACTIONS = {
     "SET_APP_WINDOW_DETAILS" : "set-app-window-details",
+
+    "SET_MULTI_STATE_PROPERTIES" : "set-multi-state-properties",
+
+    "SET_APP_LOADING_STATE" : "set-app-loading-state",
+
     "UPDATE_FRAME_WINDOWS" : "update-frame-window",
+    "CLEAR_FRAME_WINDOWS" : "clear-frame-windows",
     "UPDATE_COMPONENTS" : "update-components",
     "SET_ACTIVE_PAGE" : "set-active-page",
 
@@ -11,8 +17,6 @@ const ACTIONS = {
 function setAppWindowDetails(state, action) {
     let {AppWindow, AppWindowId} = state;
 
-    // console.log(action.payload);
-
     if(action.payload.AppWindowId)  {
         AppWindowId = action.payload.AppWindowId;
     }
@@ -22,11 +26,34 @@ function setAppWindowDetails(state, action) {
             AppWindow[key] = action.payload.AppWindow[key];
         }
     }
-
-    console.log(state);
     
     return {...state};
 
+}
+
+function setMultiStateProperties(state, action) {
+
+    let obj = {};
+
+    for(let reducerAction of action.payload)  {
+
+        let newObject = reducer(state, reducerAction);
+
+        obj = {...obj, ...newObject};
+
+    }
+
+
+    return obj;
+}
+
+function setAppLoadingState(state, action)  {
+
+    let {AppWindow} = state;
+
+    AppWindow.isLoading = action.payload;
+
+    return {...state};
 }
 
 function updateComponents(state, action)    {
@@ -44,10 +71,16 @@ function updateComponents(state, action)    {
     return {...state};
 }
 
+function clearFrameWindows(state, action)   {
+    let {FrameWindows} = state;
+
+    FrameWindows = [];
+
+    return {...state};
+}
+
 function updateFrameWindow(state, action)    {
     let { FrameWindows } = state;
-
-    // console.log(FrameWindows, action.payload.FrameWindows);
     
 
     for(let FrameWindow of action.payload.FrameWindows) {
@@ -88,14 +121,23 @@ const reducer = (state, action) => {
         case ACTIONS.SET_APP_WINDOW_DETAILS :
             return setAppWindowDetails(state, action);
 
+        case ACTIONS.SET_APP_LOADING_STATE :
+            return setAppLoadingState(state, action);
+
         case ACTIONS.UPDATE_FRAME_WINDOWS :
             return updateFrameWindow(state, action);
+
+        case ACTIONS.CLEAR_FRAME_WINDOWS :
+            return clearFrameWindows(state, action);
 
         case ACTIONS.UPDATE_COMPONENTS :
             return updateComponents(state, action);
 
         case ACTIONS.SET_ACTIVE_PAGE :
             return setActivePage(state, action);
+
+        case ACTIONS.SET_MULTI_STATE_PROPERTIES : 
+            return setMultiStateProperties(state, action);
 
         default : 
             return state;

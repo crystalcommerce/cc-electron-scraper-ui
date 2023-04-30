@@ -51,14 +51,13 @@ export default function useElementDimensions()  {
                     endHandler();
                 }
     
-            }, 10);
+            }, 1);
 
         }
 
         function endHandler()   {
 
             if(interval)    {
-                // console.log("\n\n\n")
                 clearInterval(interval);
                 count = 0;
                 interval = null;

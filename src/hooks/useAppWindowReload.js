@@ -1,19 +1,59 @@
 import React, {useEffect, useContext, useState} from "react";
 import { GlobalStateContext } from "../store/GlobalState";
+import { ACTIONS } from "../store/GlobalState/reducer";
 
 const {ipcRenderer} = window.require("electron");
 
 export default function useAppWindowReload() {
 
+    // set a loading state; probably a modal covering the entire app window;         
+            
+    // wait for the response from server; 
+
+    // then force reload;
+
+    // remove the event listener for beforeunload;
+    
+
     const [appWindowId, setAppWindowId] = useState(null);
 
-    const [ GlobalState ] = useContext(GlobalStateContext);
+    const [ GlobalState, dispatch ] = useContext(GlobalStateContext);
 
-    const updateFrameWindows = (e) => {
+    const updateFrameWindows = () => {
+
+        document.removeEventListener("keydown", bindReloadKeys);
+
+        console.log("we are reloading...");
 
         if(appWindowId) {
+
+            dispatch({type : ACTIONS.SET_APP_LOADING_STATE, payload : true});
+
+            dispatch({type : ACTIONS.CLEAR_FRAME_WINDOWS});
+            
             ipcRenderer.send("reload-app-window", appWindowId);
+
         }
+    }
+
+    const bindReloadKeys = (event) => {
+        if (event.ctrlKey && event.code === 'KeyR') {
+            updateFrameWindows()
+            event.preventDefault()
+        } else if (event.ctrlKey && event.shiftKey && event.code === 'KeyR') {
+            updateFrameWindows()
+            event.preventDefault()
+        }
+    }
+
+    const appReadyHandler = (e, data) => {
+        console.log(data.message);
+        setTimeout(() => {
+            // dispatch({type : ACTIONS.SET_APP_LOADING_STATE, payload : false});
+
+            location.reload();
+        }, 1500);
+        
     }
 
     useEffect(() => {
@@ -26,10 +66,16 @@ export default function useAppWindowReload() {
 
     useEffect(() => {
 
-        window.addEventListener("beforeunload", updateFrameWindows);
+        ipcRenderer.on("app-is-ready", appReadyHandler);
 
-        return () => window.removeEventListener("beforeunload", updateFrameWindows);
+        document.addEventListener("keydown", bindReloadKeys);
+
+        return () => {
+            document.removeEventListener("keydown", bindReloadKeys);
+            ipcRenderer.removeListener("app-is-ready",appReadyHandler);
+        }
 
     }, [appWindowId]);
+
 
 }
