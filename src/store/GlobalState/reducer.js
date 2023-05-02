@@ -1,17 +1,22 @@
 const ACTIONS = {
+    // App window state
     "SET_APP_WINDOW_DETAILS" : "set-app-window-details",
-
-    "SET_MULTI_STATE_PROPERTIES" : "set-multi-state-properties",
-
     "SET_APP_LOADING_STATE" : "set-app-loading-state",
 
+    // multi-state setter utility
+    "SET_MULTI_STATE_PROPERTIES" : "set-multi-state-properties",
+
+    // components and page setters
+    "SET_ACTIVE_PAGE" : "set-active-page",
+    "UPDATE_COMPONENTS" : "update-components",
+    
+    // Frame Window setters
+    "CREATE_FRAME_WINDOW" : "create-frame-window",
     "UPDATE_FRAME_WINDOWS" : "update-frame-window",
     "CLEAR_FRAME_WINDOWS" : "clear-frame-windows",
-    "UPDATE_COMPONENTS" : "update-components",
-    "SET_ACTIVE_PAGE" : "set-active-page",
 
-
-    "CREATE_FRAME_WINDOW" : "create-frame-window",
+    // browser windows/tabs setter;
+    "UPDATE_BROWSER_TABS" : "update-browser-tab",
 }
 
 function setAppWindowDetails(state, action) {
@@ -113,6 +118,62 @@ function setActivePage(state, action)    {
     return {...state};
 }
 
+function updateBrowserTabs(state, action)   {
+    let {BrowserTabs} = state,
+        foundTab = BrowserTabs.find(item => item.browserWindowId === action.payload.tab.browserWindowId);
+    
+    if(action.payload.operation === "add") {
+
+        // find if it's a duplicate... 
+
+        if(!foundTab)   {
+            BrowserTabs.forEach(item => {
+                if(item.browserWindowId !== action.payload.tab.browserWindowId)  {
+                    item.isActive = false;
+                } else  {
+                    item.isActive = true;
+                }
+            });
+            BrowserTabs.push(action.payload.tab);
+        } else  {
+            BrowserTabs.forEach(item => {
+                if(item.browserWindowId !== action.payload.tab.browserWindowId)  {
+                    item.isActive = false;
+                } else  {
+                    item.isActive = true;
+                }
+            });
+            Object.assign(foundTab, action.payload.tab);
+        }
+        
+    } else if(action.payload.operation === "remove") {
+
+        state.BrowserTabs = BrowserTabs.filter(item => item.browserWindowId !== action.payload.tab.browserWindowId);
+
+        if(!state.BrowserTabs.find(item => item.isActive) && state.BrowserTabs.length)  {
+            state.BrowserTabs[state.BrowserTabs.length - 1].isActive = true;
+        }
+        
+
+    } else if(action.payload.operation === "activate")  {
+   
+        BrowserTabs.forEach(item => {
+            if(item.browserWindowId !== action.payload.tab.browserWindowId)  {
+                item.isActive = false;
+            } else  {
+                item.isActive = true;
+            }
+        });
+        
+    } else if(action.payload.operation === "update-url")  {
+        if(foundTab)    {
+            Object.assign(foundTab, action.payload.tab);
+        }
+    }
+
+    return {...state};
+}
+
 
 
 const reducer = (state, action) => {
@@ -135,6 +196,9 @@ const reducer = (state, action) => {
 
         case ACTIONS.SET_ACTIVE_PAGE :
             return setActivePage(state, action);
+
+        case ACTIONS.UPDATE_BROWSER_TABS :
+            return updateBrowserTabs(state, action);
 
         case ACTIONS.SET_MULTI_STATE_PROPERTIES : 
             return setMultiStateProperties(state, action);

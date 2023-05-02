@@ -6,15 +6,6 @@ const {ipcRenderer} = window.require("electron");
 
 export default function useAppWindowReload() {
 
-    // set a loading state; probably a modal covering the entire app window;         
-            
-    // wait for the response from server; 
-
-    // then force reload;
-
-    // remove the event listener for beforeunload;
-    
-
     const [appWindowId, setAppWindowId] = useState(null);
 
     const [ GlobalState, dispatch ] = useContext(GlobalStateContext);

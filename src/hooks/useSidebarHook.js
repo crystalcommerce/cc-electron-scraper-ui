@@ -1,10 +1,15 @@
 import React, { useContext } from "react";
 import { GlobalStateContext } from "../store/GlobalState";
 import { ACTIONS } from "../store/GlobalState/reducer";
+import useElementDimensions from "./useElementDimensions";
 
-export default function useSidebarClickHandler()    {
+const {ipcRenderer} = window.require("electron");
+
+export default function useSidebarHook()    {
 
     const [GlobalState, dispatch] = useContext(GlobalStateContext);
+
+    const { getDimensions } = useElementDimensions();
 
     const showSidebarClickHandler = (e) => {
 
@@ -37,6 +42,21 @@ export default function useSidebarClickHandler()    {
         }
     }
 
-    return {showSidebarClickHandler};
+    const animationCallback = (isHidden = true) => {
+        const activeFrameWindow = GlobalState.FrameWindows.find(item => !item.hidden);
+
+        if(activeFrameWindow && activeFrameWindow.element) {
+
+            ipcRenderer.send("get-frame-window", {
+                browserFrameDimensions : getDimensions(activeFrameWindow.element),
+                parentWindowId : GlobalState.AppWindowId,
+                windowId : activeFrameWindow.componentId,
+                isHidden,
+            });
+
+        }
+    }
+
+    return {showSidebarClickHandler, animationCallback};
 
 }

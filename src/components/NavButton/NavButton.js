@@ -16,15 +16,15 @@ export default function NavButton({children, page, startIcon, onClick, hasFrameW
         <>  
             {
                 !disabled && 
-                <Button variant={variant} onClick={clickHandler}>{children}</Button>
+                <Button style={{textTransform: "none"}} variant={variant} onClick={clickHandler}>{children}</Button>
             }
             {
                 disabled && isLoading &&
-                <Button variant={variant} onClick={clickHandler} startIcon={<CircularProgress size="16px" color="inherit" />} disabled> {children}</Button>
+                <Button style={{textTransform: "none"}} variant={variant} onClick={clickHandler} startIcon={<CircularProgress size="16px" color="inherit" />} disabled> {children}</Button>
             }
             {
                 disabled && GlobalState.Pages.find(item => item.page === page).isActive &&
-                <Button variant={variant} onClick={clickHandler} disabled>{children}</Button>
+                <Button style={{textTransform: "none"}} variant={variant} onClick={clickHandler} disabled>{children}</Button>
             }
             
         </>

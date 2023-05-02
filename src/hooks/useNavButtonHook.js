@@ -60,7 +60,7 @@ export default function useNavButtonHook({page, onClick, hasFrameWindow})   {
             setIsLoading(true);
             ipcRenderer.send("hide-frame-windows", {
                 message : "hiding frame windows",
-                windowId : GlobalState.AppWindowId,
+                parentWindowId : GlobalState.AppWindowId,
                 nextPage : page,
             });
 

@@ -32,10 +32,10 @@ export default function useElementDimensions()  {
         }
     }
 
-    const animationHandler = (callback) => {
+    const animationHandler = (startCallback, endCallback) => {
         let interval = null,
             count = 0;
-
+        
         function startHandler()   {
             if(interval)    {
                 clearInterval(interval);
@@ -45,7 +45,7 @@ export default function useElementDimensions()  {
 
             interval = setInterval(() => {
             
-                callback();
+                startCallback();
                 count++;
                 if(count >= 20)    {
                     endHandler();
@@ -63,7 +63,7 @@ export default function useElementDimensions()  {
                 interval = null;
             }
 
-            callback();
+            endCallback();
 
         }
 

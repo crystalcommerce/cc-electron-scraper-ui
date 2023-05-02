@@ -17,7 +17,7 @@ export default function Card({className, children, classObject, noFlex, elRef}) 
                 </EmptyCard>
             }
             {noFlex && 
-                <div ref={elRef} className="cc-card">{children}</div>
+                <div ref={elRef} className={`cc-card ${className ? className : ""}`}>{children}</div>
             }
         </>
         

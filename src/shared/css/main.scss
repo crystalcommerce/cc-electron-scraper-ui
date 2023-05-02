@@ -235,12 +235,20 @@
         }
     }
 
+    
 
     .cc-card   {
         box-shadow: 0px 0px 3px 1px #b4b4b46b;
         background-color : $darkmode-bg;
-        padding : 1.5rem;
+        padding : 1.3rem;
         width : 100%;
+        &.auto-width {
+            width : auto;
+        }
+        &.no-shadow {
+            box-shadow: none;
+            border : 1px solid #727272;
+        }
     }
 
     .empty-card {
@@ -260,6 +268,7 @@
             & > .card   {
                 width : 100%;
             }
+            
         }
 
         &.main-empty-card {
@@ -533,13 +542,13 @@
     }
 
     @keyframes withSidebar  {
-        0% {padding: .5rem}
-        100% {padding : .52rem}
+        0% {width : 0;}
+        100% {width : 300px;}
     }
 
     @keyframes withoutSidebar  {
-        0% {padding : .52rem}
-        100% {padding : .5rem}
+        0% {width : 300px;}
+        100% {width : 0;}
     }
 
     //width : calc(100% - 300px);
@@ -731,7 +740,11 @@
 
                 .cc-main-sidebar    {
                     width : 0;
+                    animation-name: withoutSidebar;
+                    animation-duration : .2s;
+                    animation-timing-function: ease-in-out;
                     &.show {
+                        animation-name: withSidebar;
                         width : 300px;
                     }
                     background-color: #414141;
@@ -745,16 +758,10 @@
                     background-color: #4b4b4b;
                     // width : 100%;
                     flex-grow: 1;
-                    animation-name: withoutSidebar;
-                    animation-duration : .2s;
-                    animation-timing-function: ease-in-out;
                     width : 100%;
                     &.with-side-bar {
-                        animation-name: withSidebar;
-                        
                         width : calc(100% - 300px);
                     }
-                    
                     
                     display : flex;
                     flex-direction : column;
@@ -762,23 +769,155 @@
                         display : flex;
                         flex-direction : column;
                         // height : 100%;
+                        min-width : 425px;
                         min-height : calc(100vh - (120px + 52px + 1rem));
-                        .cc-browser-container  {
-                            flex-grow: 1;
-                        }
-                        &.hidden {
-                            // height : auto;
-                            min-height : auto;
-                            .cc-browser-container  {
-                                height : auto;
-                                min-height : auto;
-                                padding : 0;
-                                > * {
+                        height : auto;
+
+                        > *, .cc-browser-frame-empty-card-container  {
+                            flex-grow : 1;
+                            
+                            .cc-browser-header-container    {
+                                position: relative;
+                                padding-top: 36px;
+                            }
+                            .cc-browser-tabs    {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                gap : .25rem;
+                                flex-wrap:nowrap;
+                                overflow-y: hidden;
+                                overflow-x: auto;
+                                .browser-tab    {
+                                    display : flex;
+                                    justify-content: stretch;
+                                    align-items: stretch;
+                                    position : relative;
+                                    height : 36.5px;
+                                    // justify-content: left;
+                                    .cc-tab-icon   {
+                                        position : absolute;
+                                        top : 50%;
+                                        transform : translateY(-50%);
+                                        left : .5rem;
+                                    }
+                                    &.add-button    {
+                                        display : flex;
+                                        justify-content: stretch;
+                                        align-items: stretch;
+                                        width : auto;
+                                        padding:0;
+                                        .cc-tab-button  {
+                                            flex-grow:1;
+                                            width: 100%;
+                                            min-width : auto;
+                                            // height: 36.5px;
+                                            padding-left : .5rem;
+                                            padding-right : .5rem;
+                                            display : flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            border: none;
+                                        }
+                                    }
+                                    &.cc-card {
+                                        box-shadow : none;
+                                        background-color : #1e1d1d;
+                                    }
+                                    &.disabled  {
+                                        // background-color :rgb(94, 94, 94);
+        
+                                        .cc-tab-button  {
+                                            color : #7fc4e2;
+                                            color : #d6e17b;
+                                            color : #eb7461;
+                                        }
+                                        .cc-tab-icon {
+                                            color : #7fc4e2;
+                                            color : #d6e17b;
+                                            color : #eb7461;
+                                        }
+                                    }
+                                    .cc-tab-button  {
+                                        color : #a2b2b9;
+                                        
+                                        display : block;
+                                        border-radius: 0!important;
+                                        min-width : 150px;
+                                        max-width : 200px;
+                                        width : auto;
+                                        padding-left : 2.5rem;
+                                        padding-right : 2.5rem;
+                                        
+                                        text-align: left;
+                                        overflow : hidden;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        border: none;
+                                    }
+                                    .cc-close-tab-button    {
+                                        position: absolute;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        right : .5rem;
+                                        font-size : .7rem!important;
+                                    }
+
                                     padding : 0;
-                                    box-shadow:  none;
+                                    
+                                    border : 1px solid #727272;
+
+                                    &.active-tab    {
+                                        border-bottom: 1px solid transparent;
+                                    }
+                                    
                                 }
                             }
+                            .browser-address-bar    {
+                                border-bottom: 0;
+                                padding : .75rem 1.2rem;
+                                
+                                justify-content: stretch;
+                                // .cc-card    {
+                                    background-color : #1e1d1d;
+                                // }
+                                form    {
+                                    display : flex;
+                                    flex-direction: row;
+                                    align-items: stretch;
+                                    margin : 0;
+                                    padding : 0;
+                                }
+                                .address-bar-input  {
+                                    padding : .5rem;
+                                    background-color : #343434;
+                                    width : 100%;
+                                    border : 1px solid #657272;
+                                    font-size: 1rem;
+                                }
+                            }
+                            .cc-browser-container  {
+                                &.no-shadow {
+                                    border-top: none;
+                                }
+                                flex-grow: 1;
+                            }
+                            &.hidden {
+                                // height : auto;
+                                min-height : auto;
+                                .cc-browser-container  {
+                                    height : auto;
+                                    min-height : auto;
+                                    padding : 0;
+                                    > * {
+                                        padding : 0;
+                                        box-shadow:  none;
+                                    }
+                                }
+                            }
+
                         }
+                        
                         
                     }
                     

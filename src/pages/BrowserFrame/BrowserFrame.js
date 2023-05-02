@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import FrameWindow from "../../components/FrameWindow";
 import useActivePagesHook from "../../hooks/useActivePagesHook";
 import { generateUuid, toUrl } from "../../utilities";
+import BrowserHeader from "../../components/BrowserHeader/BrowserHeader";
+
 
 export default function BrowserFrame({children})   {
 
@@ -11,12 +13,12 @@ export default function BrowserFrame({children})   {
     
     return (
         <>
-            {isActive && <FrameWindow componentId={id}>
-                {children}
-            </FrameWindow>}
-            {/* {isActive && <BrowserFrameContainer>
-                {children}
-            </BrowserFrameContainer>} */}
+            {isActive && 
+
+                <FrameWindow componentId={id} className={"cc-browser-frame-component"} innerClassName="no-padding no-shadow">
+                    <BrowserHeader></BrowserHeader>
+                </FrameWindow>
+            }
         </>
     );
     

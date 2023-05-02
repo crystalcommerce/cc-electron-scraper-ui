@@ -7,6 +7,8 @@ const { ipcRenderer } = window.require("electron");
 
 export default function useFrameWindowHook(componentId, cardRef)   {
 
+    const [frameUpdated, setFrameUpdated] = useState(false);
+
     const [GlobalState, dispatch] = useContext(GlobalStateContext);
 
     const {getDimensions} = useElementDimensions();
@@ -89,11 +91,12 @@ export default function useFrameWindowHook(componentId, cardRef)   {
 
         const foundFrame = GlobalState.FrameWindows.find(item => item.componentId === componentId);
 
-        if(foundFrame && !foundFrame.hidden)  {
+        if(foundFrame && !foundFrame.hidden && !frameUpdated)  {
             getFrameWindow();
+            setFrameUpdated(true);
         }
 
-    }, [GlobalState]);
+    }, [GlobalState, frameUpdated]);
 
     useEffect(() => {
 

@@ -11,12 +11,9 @@ export default function ScraperFrame({children}) {
     
     return (
         <>
-            {isActive && <FrameWindow componentId={id}>
+            {isActive && <FrameWindow innerClassName={"no-padding"} componentId={id}>
                 {children}
             </FrameWindow>}
-            {/* {isActive && <BrowserFrameContainer>
-                {children}
-            </BrowserFrameContainer>} */}
         </>
     );
 }

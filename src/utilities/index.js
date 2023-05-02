@@ -437,3 +437,23 @@ export function styleObjectToString(styleObj)   {
         return arr;
     }, []).join("; ")
 }
+
+export function debounce(callback, timeDelay = 500)  {
+
+    let timeout;
+
+    return function(...args)   {
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(() => {
+
+            callback(...args);
+
+            clearTimeout(timeout);
+
+        }, timeDelay);
+
+    }
+
+}

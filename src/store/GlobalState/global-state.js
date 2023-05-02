@@ -19,33 +19,25 @@ export const globalState = {
         //     toggleClassName : null,
         //     hidden : false,
         // },
+    ],
+    BrowserTabs : [
+        // {
+        //     browserWindowId : generateUuid(),
+        //     parentWindowId : null,
+        //     url : "Sa dulo ng daigdig...",
+        //     label : "New Tab",
+        //     isActive : true,
+        //     dimensions : {}, // we may not need to set this up... we can just set it up in the backend... this is just a browser...
+        // }
+    ],
+    ScraperTabs : [
         // {
         //     windowId : null,
         //     parentWindowId : null,
+        //     type : "single" || "set" || "categorized-set",
+        //     url : "",
         //     dimensions : {},
-        //     componentId : "ScraperFrame",
-        //     element : null,
-        //     toggleClassName : null,
-        //     hidden : false,
         // }
-    ],
-    BrowserWindows : [
-        {
-            windowId : null,
-            windowType : "scraper" || "browser",
-            scraperType : "singleProduct" || "productSets" || "categorizedSets",
-            parentWindowId : null,
-            dimensions : {}
-        }
-    ],
-    ScraperWindows : [
-        {
-            windowId : null,
-            type : "single" || "set" || "categorized-set",
-            parentWindowId : null,
-            dimensions : {},
-            
-        }
     ],
     Components : {
         BrowserFrameContainer : {
@@ -104,12 +96,12 @@ export const globalState = {
         {
             label : "Home",
             page : "Home",
-            isActive : true,
+            isActive : false,
         },
         {
             label : "Internet",
             page : "Internet Browser",
-            isActive : false,
+            isActive : true,
         },
         {
             label : "Scraper",
