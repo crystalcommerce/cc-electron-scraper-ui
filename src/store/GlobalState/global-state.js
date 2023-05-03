@@ -40,6 +40,15 @@ export const globalState = {
         // }
     ],
     Components : {
+        AddBrowserTabButton : {
+            disabled : false,
+        },
+        BrowserAddressBar : {
+            hidden : false,
+            toggleClassName : null,
+            element : null,
+            disabled : false,
+        },
         BrowserFrameContainer : {
             hidden : false,
             toggleClassName : null,

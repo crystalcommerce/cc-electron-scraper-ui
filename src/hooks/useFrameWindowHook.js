@@ -42,6 +42,20 @@ export default function useFrameWindowHook(componentId, cardRef)   {
     // update from the backend;
     const getFrameWindowUpdate = (e, data) => {
         // setIsUpdating(false);
+
+        dispatch({
+            type : ACTIONS.UPDATE_FRAME_WINDOWS, 
+            payload : {
+                FrameWindows : [
+                    {
+                        parentWindowId : GlobalState.AppWindowId,
+                        componentId,
+                        hidden : false,
+                        isReady : true,
+                    }
+                ]
+            }
+        })
     }
 
     useEffect(() => {

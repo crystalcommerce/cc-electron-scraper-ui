@@ -20,15 +20,16 @@ export default function BrowserTabs()   {
                             icon={item.icon} 
                             label={item.label} 
                             className={GlobalState.BrowserTabs.find(itm => item.browserWindowId === itm.browserWindowId).isActive ? "active-tab" : ""} key={item.browserWindowId} 
-                            disabled={GlobalState.BrowserTabs.find(itm => item.browserWindowId === itm.browserWindowId).isActive}
+                            disabled={GlobalState.BrowserTabs.find(itm => item.browserWindowId === itm.browserWindowId).isActive || GlobalState.BrowserTabs.find(itm => item.browserWindowId === itm.browserWindowId).disabled}
                             onClick={(e) => setActiveBrowserTab(e, item.browserWindowId)} 
-                            onClose={(e) => removeBrowserTab(e, item.browserWindowId)} 
+                            onClose={(e) => removeBrowserTab(e, item.browserWindowId)}
+                            closeButtonDisabled={GlobalState.BrowserTabs.find(itm => item.browserWindowId === itm.browserWindowId).disabled}
                         />
                     );
                 })
 
             }
-            <BrowserTab onClick={addNewBrowserTab} addButton={true}></BrowserTab>
+            <BrowserTab disabled={GlobalState.Components.AddBrowserTabButton.disabled} onClick={addNewBrowserTab} addButton={true}></BrowserTab>
         </EmptyCard>
     )
 }

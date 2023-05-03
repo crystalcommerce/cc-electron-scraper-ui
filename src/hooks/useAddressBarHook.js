@@ -17,6 +17,17 @@ export default function useAddressBarHook()  {
 
     const [activeTab, setActiveTab] = useState(null);
 
+    const updateBrowserAddressBarComponent = () => {
+        dispatch({
+            type : ACTIONS.UPDATE_COMPONENTS,
+            payload : {
+                BrowserAddressBar : {
+                    element : inputRef.current,
+                }
+            }
+        })
+    }
+
     const updateUrlInGlobalState = (urlStr = null) =>{
 
         urlStr = typeof urlStr === "string" ? urlStr : url;
@@ -105,9 +116,11 @@ export default function useAddressBarHook()  {
 
         formRef.current.addEventListener("submit", updateUrlEventHandler);
 
-        inputRef.current.focus();
+        // inputRef.current.focus();
 
         ipcRenderer.on("update-browser-window", updateUrlInGlobalStateIPC);
+
+        updateBrowserAddressBarComponent();
 
         /* clean up... */
         return () => {

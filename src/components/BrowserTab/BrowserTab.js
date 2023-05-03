@@ -6,8 +6,9 @@ import PublicIcon from '@mui/icons-material/Public';
 import { Add, Close } from "@mui/icons-material";
 
 
-export default function BrowserTab({children, onClick, disabled, addButton, className, icon, label, onClose})    {
+export default function BrowserTab({children, onClick, disabled, addButton, className, icon, label, onClose, closeButtonDisabled})    {
     
+
     return (
         <>  
             <Card className={`auto-width browser-tab  ${className || ""} ${addButton ? "add-button" : "normal-tabs"} ${disabled ? "disabled" : ""}`} noFlex>
@@ -44,7 +45,7 @@ export default function BrowserTab({children, onClick, disabled, addButton, clas
                             {label}
                             {children}
                         </Button>
-                        <IconButton onClick={onClose} className="cc-close-tab-button">
+                        <IconButton disabled={closeButtonDisabled} onClick={onClose} className="cc-close-tab-button">
                             <Close sx={{fontSize : 14}}></Close>
                         </IconButton>
                     </div>
@@ -55,7 +56,7 @@ export default function BrowserTab({children, onClick, disabled, addButton, clas
                     addButton && 
 
 
-                    <Button onClick={onClick} className={`cc-tab-button`} style={{textTransform : "none"}} color={"primary"} variant="default" size={"small"} fullWidth>
+                    <Button disabled={disabled} onClick={onClick} className={`cc-tab-button`} style={{textTransform : "none"}} color={"primary"} variant="default" size={"small"} fullWidth>
                         <Add sx={{fontSize : 18}}></Add>
                     </Button>
 

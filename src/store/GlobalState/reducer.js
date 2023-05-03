@@ -119,12 +119,14 @@ function setActivePage(state, action)    {
 }
 
 function updateBrowserTabs(state, action)   {
-    let {BrowserTabs} = state,
-        foundTab = BrowserTabs.find(item => item.browserWindowId === action.payload.tab.browserWindowId);
+    let {BrowserTabs, Components} = state;
+    
+    
     
     if(action.payload.operation === "add") {
 
         // find if it's a duplicate... 
+        let foundTab = BrowserTabs.find(item => item.browserWindowId === action.payload.tab.browserWindowId);
 
         if(!foundTab)   {
             BrowserTabs.forEach(item => {
@@ -166,10 +168,26 @@ function updateBrowserTabs(state, action)   {
         });
         
     } else if(action.payload.operation === "update-url")  {
+
+        let foundTab = BrowserTabs.find(item => item.browserWindowId === action.payload.tab.browserWindowId);
+
         if(foundTab)    {
             Object.assign(foundTab, action.payload.tab);
         }
-    }
+
+    } else if(action.payload.operation === "disable-all-buttons")   {
+
+        BrowserTabs.forEach(item => item.disabled = true);
+
+    } else if(action.payload.operation === "enable-all-buttons")    {
+
+        BrowserTabs.forEach(item => item.disabled = false);
+
+    } else if(action.payload.operation === "disable-add-button")    {
+
+        Components.AddBrowserTabButton.disabled = action.payload.disabled;
+
+    } 
 
     return {...state};
 }
