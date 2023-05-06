@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useNativeImageHook from "../../hooks/useNativeImageHook";
 
 
-export default function NativeImage({src, alt, srcset, sizes, height, width, useMap, localFile })  {
+export default function NativeImage({ className, src, alt, srcset, sizes, height, width, useMap, localFile })  {
 
     const {imageSrc} = useNativeImageHook(src);
     
@@ -10,7 +10,7 @@ export default function NativeImage({src, alt, srcset, sizes, height, width, use
 
     return (
         <>
-            <img src={usedImageSrc} alt={alt} height={height} width={width} sizes={sizes} srcSet={srcset} useMap={useMap} />
+            <img className={className} src={usedImageSrc} alt={alt} height={height} width={width} sizes={sizes} srcSet={srcset} useMap={useMap} />
         </>
     )
 

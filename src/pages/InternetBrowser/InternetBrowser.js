@@ -5,7 +5,7 @@ import { generateUuid, toUrl } from "../../utilities";
 import BrowserHeader from "../../components/BrowserHeader/BrowserHeader";
 
 
-export default function BrowserFrame({children})   {
+export default function InternetBrowser({children})   {
 
     const isActive = useActivePagesHook("Internet Browser");
 

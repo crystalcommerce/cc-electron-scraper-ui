@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalStateContext } from "../store/GlobalState";
 import { ACTIONS } from "../store/GlobalState/reducer";
 import useElementDimensions from "./useElementDimensions";
@@ -10,6 +10,8 @@ export default function useSidebarHook()    {
     const [GlobalState, dispatch] = useContext(GlobalStateContext);
 
     const { getDimensions } = useElementDimensions();
+
+    const [activeFrameWindow, setActiveFrameWindow] = useState(null);
 
     const showSidebarClickHandler = (e) => {
 
@@ -42,20 +44,25 @@ export default function useSidebarHook()    {
         }
     }
 
-    const animationCallback = (isHidden = true) => {
-        const activeFrameWindow = GlobalState.FrameWindows.find(item => !item.hidden);
-
+    const animationCallback = (count) => {
+        
         if(activeFrameWindow && activeFrameWindow.element) {
 
-            ipcRenderer.send("get-frame-window", {
-                browserFrameDimensions : getDimensions(activeFrameWindow.element),
-                parentWindowId : GlobalState.AppWindowId,
-                windowId : activeFrameWindow.componentId,
-                isHidden,
+            ipcRenderer.send("set-frame-dimensions", {
+                AppWindowId : activeFrameWindow.AppWindowId,
+                componentId : activeFrameWindow.componentId,
+                dimensions : getDimensions(activeFrameWindow.element),
             });
 
         }
     }
+
+    useEffect(() => {
+        if(!activeFrameWindow)  {
+            setActiveFrameWindow(prev => GlobalState.FrameWindows.find(item => !item.hidden));
+        }
+
+    }, [GlobalState]);
 
     return {showSidebarClickHandler, animationCallback};
 

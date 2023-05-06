@@ -7,55 +7,47 @@ const { ipcRenderer } = window.require("electron");
 
 export default function useFrameWindowHook(componentId, cardRef)   {
 
-    const [frameUpdated, setFrameUpdated] = useState(false);
-
     const [GlobalState, dispatch] = useContext(GlobalStateContext);
 
     const {getDimensions} = useElementDimensions();
 
-    const getFrameWindow = (isHidden = false) => {
-
+    const setFrameWindow = () => {
 
         if(GlobalState.AppWindow.isLoading)   {
             return;
         }
 
-        const foundFrame = GlobalState.FrameWindows.find(item => item.componentId === componentId);
-
-        const el = cardRef ? cardRef.current : null;
-
-        if(foundFrame) {
-            ipcRenderer.send("get-frame-window", {
-                browserFrameDimensions : getDimensions(el),
-                parentWindowId : GlobalState.AppWindowId,
-                windowId : componentId,
-                isHidden : isHidden,
-            });
-        }
+        ipcRenderer.send("set-frame-dimensions", {
+            AppWindowId : GlobalState.AppWindowId,
+            componentId,
+            dimensions : getDimensions(cardRef.current),
+            message : "Triggered in frame window hook"
+        });
         
     }
 
-    const eventCallback = (e, isHidden = false) => {
-        getFrameWindow(isHidden);
+    const eventCallback = (e) => {
+        setFrameWindow();
     }
 
     // update from the backend;
-    const getFrameWindowUpdate = (e, data) => {
+    const frameWindowUpdateHandler = (e, data) => {
         // setIsUpdating(false);
-
-        dispatch({
-            type : ACTIONS.UPDATE_FRAME_WINDOWS, 
-            payload : {
-                FrameWindows : [
-                    {
-                        parentWindowId : GlobalState.AppWindowId,
-                        componentId,
-                        hidden : false,
-                        isReady : true,
-                    }
-                ]
-            }
-        })
+        if(GlobalState.AppWindowId === data.payload.AppWindowId && data.payload.componentId === componentId)    {
+            dispatch({
+                type : ACTIONS.UPDATE_FRAME_WINDOWS, 
+                payload : {
+                    FrameWindows : [
+                        {
+                            AppWindowId : GlobalState.AppWindowId,
+                            componentId,
+                            hidden : false,
+                            isReady : true,
+                        }
+                    ]
+                }
+            });
+        }
     }
 
     useEffect(() => {
@@ -68,16 +60,17 @@ export default function useFrameWindowHook(componentId, cardRef)   {
             payload : {
                 FrameWindows : [
                     {
-                        parentWindowId : GlobalState.AppWindowId,
+                        AppWindowId : GlobalState.AppWindowId,
                         element : cardRef.current,
-                        windowId : componentId,
                         componentId,
-                        hidden : false,
+                        hidden : true,
                         dimensions : getDimensions(el),
                     }
                 ]
             }
         });
+
+        setFrameWindow();
         
         // update the global state on unload;
         return () => {
@@ -86,11 +79,11 @@ export default function useFrameWindowHook(componentId, cardRef)   {
                 payload : {
                     FrameWindows : [
                         {
-                            parentWindowId : GlobalState.AppWindowId,
+                            AppWindowId : GlobalState.AppWindowId,
                             element : null,
-                            windowId : componentId,
                             componentId,
                             hidden : true,
+                            isReady : false,
                             dimensions : getDimensions(el),
                         }
                     ]
@@ -99,36 +92,26 @@ export default function useFrameWindowHook(componentId, cardRef)   {
             
         }
 
+        
+        
+
     }, [cardRef]);
     
     useEffect(() => {
-
-        const foundFrame = GlobalState.FrameWindows.find(item => item.componentId === componentId);
-
-        if(foundFrame && !foundFrame.hidden && !frameUpdated)  {
-            getFrameWindow();
-            setFrameUpdated(true);
-        }
-
-    }, [GlobalState, frameUpdated]);
-
-    useEffect(() => {
-
-        
 
         window.addEventListener("resize", eventCallback);
         window.addEventListener("load", eventCallback);
 
         // get the window details from the backend;
-        ipcRenderer.on("frame-window-details", getFrameWindowUpdate);
+        ipcRenderer.on("frame-window-component-details", frameWindowUpdateHandler);
 
         return () => {
             window.removeEventListener("resize", eventCallback);
             window.removeEventListener("load", eventCallback);
             // remove the listener on unload
-            ipcRenderer.removeListener("frame-window-details", getFrameWindowUpdate);
+            ipcRenderer.removeListener("frame-window-component-details", frameWindowUpdateHandler);
 
-            getFrameWindow(true);
+            setFrameWindow();
         };
 
     }, []);

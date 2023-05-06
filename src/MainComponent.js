@@ -1,14 +1,21 @@
 import React, { useContext } from "react";
 import Layout from "./Layout";
-import CardTest from "./test/CardTest";
-import Card from "./components/Card/Card";
-import BrowserFrame from "./pages/BrowserFrame";
-import Home from "./pages/home/Home";
-import ScraperFrame from "./pages/ScraperFrame";
 import useAppWindowReload from "./hooks/useAppWindowReload";
 import AppLoaderMask from "./components/AppLoaderMask";
 import { GlobalStateContext } from "./store/GlobalState";
+
+
+/* Pages */
+import Home from "./pages/home/Home";
 import ManageUsers from "./pages/ManageUsers/ManageUsers";
+import ManageScrapers from "./pages/ManageScraper/ManageScraper";
+import InternetBrowser from "./pages/InternetBrowser/InternetBrowser";
+
+
+/* Test child components */
+import CardTest from "./test/CardTest";
+import Card from "./components/Card/Card";
+
 
 
 export default function MainComponent() {
@@ -27,27 +34,25 @@ export default function MainComponent() {
                          These are the pages that are available.
 
                     */}
-                    <BrowserFrame>
-                        {/* <Card>
-                            <Button onClick={hideBrowserFrameContainer}>{GlobalState.Components.BrowserFrameContainer.hidden ? "Reveal Browser Frame" : "hide browser frame"}</Button> 
-                        </Card> */}
-                    </BrowserFrame>
                     <Home>
                         <CardTest  />
                     </Home>
-                    <ScraperFrame>
-
+                    <ManageScrapers>
                         <Card></Card>
                         <Card></Card>
                         <Card></Card>
                         <Card></Card>
                         <Card></Card>
-                    </ScraperFrame>
+                    </ManageScrapers>
+                    <InternetBrowser></InternetBrowser>
+                    <ManageScrapers></ManageScrapers>
                     <ManageUsers>
-
+                        <Card></Card>
+                        <Card></Card>
+                        <Card></Card>
                     </ManageUsers>
+                    
                 </Layout>
-            
             </div>
         </div>
     )

@@ -10,7 +10,6 @@ export default function useNavButtonHook({page, onClick, hasFrameWindow})   {
     const [variant, setVariant] = useState("default");
     const [GlobalState, dispatch] = useContext(GlobalStateContext);
 
-
     const [activePageHasFrameWindow, setActivePageHasFrameWindow] = useState(false); 
 
     const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +19,7 @@ export default function useNavButtonHook({page, onClick, hasFrameWindow})   {
 
         setIsLoading(false);
 
-        if(data.nextPage)   {
+        if(data.payload.nextPage && data.payload.AppWindowId === GlobalState.AppWindowId)   {
 
             dispatch({
                 type : ACTIONS.SET_MULTI_STATE_PROPERTIES,
@@ -29,7 +28,7 @@ export default function useNavButtonHook({page, onClick, hasFrameWindow})   {
                     {
                         type : ACTIONS.SET_ACTIVE_PAGE, 
                         payload : {
-                            page : data.nextPage,
+                            page : data.payload.nextPage,
                             isActive : true,   
                         }
                     },
@@ -58,9 +57,9 @@ export default function useNavButtonHook({page, onClick, hasFrameWindow})   {
 
         if(activePageHasFrameWindow || hasFrameWindow)  {
             setIsLoading(true);
-            ipcRenderer.send("hide-frame-windows", {
-                message : "hiding frame windows",
-                parentWindowId : GlobalState.AppWindowId,
+            ipcRenderer.send("hide-browser-windows", {
+                message : "hiding browser windows",
+                AppWindowId : GlobalState.AppWindowId,
                 nextPage : page,
             });
 
@@ -95,10 +94,10 @@ export default function useNavButtonHook({page, onClick, hasFrameWindow})   {
 
     useEffect(() => {
         /* retrieving signal from server that all frame windows are now hidden... */
-        ipcRenderer.on("active-frames-hidden", dispatchFunction);
+        ipcRenderer.on("active-browsers-hidden", dispatchFunction);
     
         return () => {
-            ipcRenderer.removeListener("active-frames-hidden", dispatchFunction);
+            ipcRenderer.removeListener("active-browsers-hidden", dispatchFunction);
         };
         
     }, []);

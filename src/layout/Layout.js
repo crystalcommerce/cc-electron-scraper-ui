@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import EmptyCard from "../components/EmptyCard";
 
 import BodyContainer from "../components/BodyContainer";
+import SidebarNav from "../components/SidebarNav/SidebarNav";
 
 export default function Layout({children})    {
 
@@ -14,6 +15,7 @@ export default function Layout({children})    {
             <Header className="flex col center-left" />
             <BodyContainer>
                 <Sidebar>
+                    <SidebarNav></SidebarNav>
                 </Sidebar>
                 <Main>
                     {children}

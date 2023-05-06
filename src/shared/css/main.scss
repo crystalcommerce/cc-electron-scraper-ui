@@ -748,7 +748,17 @@
                         width : 300px;
                     }
                     background-color: #414141;
+                    background-color: #1c1c1c;
                     transition : width .2s ease-in-out;
+
+                    .cc-sidebar-nav {
+                        display : flex;
+                        flex-direction : column;
+                        // .sidebar-nav-item   {
+                        //     // background-color: 
+                        // }
+                    }
+
                 }
     
                 .cc-main-container  {
@@ -920,6 +930,22 @@
                                     width : 100%;
                                     border : 1px solid #657272;
                                     font-size: 1rem;
+                                }
+                                .dev-tools-button {
+                                    margin:0;
+                                    padding : 1rem;
+                                    width : 30px;
+                                    height : 30px;
+                                    min-width: auto;
+                                    color : #a7a7a7;
+                                    transition : color .2s ease-in-out;
+                                    .icon {
+                                        pointer-events : none;
+                                        font-size : $font-size-sm;   
+                                    }
+                                    &:hover {
+                                        color : #f1f8ae;
+                                    }
                                 }
                             }
                             .cc-browser-container  {

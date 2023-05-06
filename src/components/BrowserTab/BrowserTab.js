@@ -19,7 +19,7 @@ export default function BrowserTab({children, onClick, disabled, addButton, clas
                         }
                         {
                             icon && 
-                            <NativeImage src={icon} />
+                            <NativeImage height="18" width="18" className={"cc-tab-icon"} src={icon} />
                         }
                         <Button onClick={onClick} className={`cc-tab-button`} style={{textTransform : "none"}} color={"primary"} variant="default" size={"small"} fullWidth>
                             {label}
@@ -38,7 +38,7 @@ export default function BrowserTab({children, onClick, disabled, addButton, clas
                         }
                         {
                             icon && 
-                            <NativeImage src={icon} />
+                            <NativeImage height="18" width="18" className={"cc-tab-icon"} src={icon} />
                         }
                         <Button onClick={onClick} disabled className={`cc-tab-button`} style={{textTransform : "none"}} color={"primary"} variant="default" size={"small"} fullWidth>
                             

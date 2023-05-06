@@ -27,14 +27,8 @@ export default function HeaderNav() {
                     })
 
                 }
-                {/* <li>
-                    <NavButton page={"Browser Scraper"}>
-                        Browser Scraper
-                    </NavButton>
-                </li> */}
 
             </ul>
-            
         </nav>
     )
 }

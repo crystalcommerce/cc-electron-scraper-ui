@@ -457,3 +457,58 @@ export function debounce(callback, timeDelay = 500)  {
     }
 
 }
+
+export function urlConstructor(urlString) {
+    // Step 1: Identify the parts of the URL
+    let protocol = "";
+    let domain = "";
+    let path = "";
+    let queryParams = "";
+
+    // Step 2: Determine the protocol
+    if (urlString.startsWith("http://")) {
+        protocol = "http://";
+        urlString = urlString.slice(protocol.length);
+    } else if (urlString.startsWith("https://")) {
+        protocol = "https://";
+        urlString = urlString.slice(protocol.length);
+    } else {
+        protocol = "https://";
+    }
+
+    // Step 3: Extract the domain or hostname
+    if (urlString.includes("/")) {
+        domain = urlString.split("/")[0];
+        urlString = urlString.slice(domain.length);
+    } else {
+    
+        domain = urlString;
+
+        if(!domain.includes(".com"))   {
+            domain += ".com";
+        }
+
+        urlString = "";
+    }
+
+    // Step 4: Extract the path or resource
+    if (urlString.includes("?")) {
+        path = urlString.split("?")[0];
+        queryParams = urlString.slice(path.length);
+    } else {
+        path = urlString;
+    }
+
+    // Step 5: Extract the query parameters
+    if (queryParams.startsWith("?")) {
+        queryParams = queryParams.slice(1);
+    }
+
+    // Step 6: Assemble the URL
+    let url = protocol + domain + path;
+        if (queryParams) {
+        url += "?" + queryParams;
+    }
+
+    return url;
+}

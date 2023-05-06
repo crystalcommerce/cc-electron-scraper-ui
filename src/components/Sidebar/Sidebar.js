@@ -10,7 +10,7 @@ export default function Sidebar({children, className}) {
 
     const {animationCallback} = useSidebarHook();
     const {animationHandler} = useElementDimensions();
-    const {startHandler, endHandler} = animationHandler(animationCallback, animationCallback);
+    const {startHandler, endHandler} = animationHandler(animationCallback);
 
     return (
         <aside onAnimationStart={startHandler} onAnimationEnd={endHandler} className={`cc-main-sidebar ${GlobalState.Components.Sidebar.hidden ? "" : "show"} ${className ? className  : ""}`}>{children}</aside>

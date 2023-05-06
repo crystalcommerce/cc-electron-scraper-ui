@@ -155,7 +155,7 @@ function updateBrowserTabs(state, action)   {
         if(!state.BrowserTabs.find(item => item.isActive) && state.BrowserTabs.length)  {
             state.BrowserTabs[state.BrowserTabs.length - 1].isActive = true;
         }
-        
+        action.payload.callback(state.BrowserTabs.find(item => item.isActive));
 
     } else if(action.payload.operation === "activate")  {
    
@@ -166,6 +166,8 @@ function updateBrowserTabs(state, action)   {
                 item.isActive = true;
             }
         });
+
+        // action.payload.callback(state.BrowserTabs.find(item => item.isActive));
         
     } else if(action.payload.operation === "update-url")  {
 
@@ -173,7 +175,13 @@ function updateBrowserTabs(state, action)   {
 
         if(foundTab)    {
             Object.assign(foundTab, action.payload.tab);
+
+            if(action.payload.callback) {
+                action.payload.callback();
+            }
         }
+
+        
 
     } else if(action.payload.operation === "disable-all-buttons")   {
 
@@ -187,7 +195,14 @@ function updateBrowserTabs(state, action)   {
 
         Components.AddBrowserTabButton.disabled = action.payload.disabled;
 
-    } 
+    } else if(action.payload.operation === "update-browser-tab-info")   {
+        let foundTab = BrowserTabs.find(item => item.browserWindowId === action.payload.tab.browserWindowId);
+
+        for(let key in action.payload.tab)  {
+            foundTab[key] = action.payload.tab[key];
+        }
+
+    }
 
     return {...state};
 }
