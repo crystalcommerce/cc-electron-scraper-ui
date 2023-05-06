@@ -121,9 +121,7 @@ export default function useBrowserTabsHook()    {
                         }
                     }
                 ]
-            });        
-
-            GlobalState.Components.BrowserAddressBar.element.focus();
+            }); 
 
         }
         
@@ -198,7 +196,6 @@ export default function useBrowserTabsHook()    {
                                     },
                                 });
                             } else  {
-                                console.log("adding new browser tab...")
                                 addNewBrowserTab();
                             }
                         }
@@ -287,7 +284,6 @@ export default function useBrowserTabsHook()    {
             ]
         });   
 
-        GlobalState.Components.BrowserAddressBar.element.focus();
     }
 
     const updateBrowserTabElectronEventHandler = (e, data) => {
@@ -320,7 +316,7 @@ export default function useBrowserTabsHook()    {
             addNewBrowserTab();
         }
 
-    }, [activeFrame]);
+    }, [activeFrame, GlobalState]);
 
     // setting and unsetting the event listeners from electron.
     useEffect(() => {

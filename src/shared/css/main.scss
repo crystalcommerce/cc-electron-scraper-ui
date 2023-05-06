@@ -297,7 +297,7 @@
     $scrollbar-thumb-bg : rgb(200, 212, 219);
     $scrollbar-thumb-hover-bg : rgb(177, 194, 206);
 
-
+    
     .cc-modal-container, .cc-app-loading-container {
         position : fixed;
         background-color : #0e1b2eb7;
@@ -321,7 +321,8 @@
     }
 
     .cc-app-loading-container   {
-        z-index : 5
+        z-index : 5;
+        background-color : #788dabb0;
     }
 
 
@@ -912,7 +913,7 @@
                             .browser-address-bar    {
                                 border-bottom: 0;
                                 padding : .75rem 1.2rem;
-                                
+                                height : 61px;
                                 justify-content: stretch;
                                 // .cc-card    {
                                     background-color : #1e1d1d;

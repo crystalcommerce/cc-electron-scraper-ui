@@ -177,11 +177,9 @@ function updateBrowserTabs(state, action)   {
             Object.assign(foundTab, action.payload.tab);
 
             if(action.payload.callback) {
-                action.payload.callback();
+                action.payload.callback(foundTab);
             }
         }
-
-        
 
     } else if(action.payload.operation === "disable-all-buttons")   {
 
@@ -194,6 +192,11 @@ function updateBrowserTabs(state, action)   {
     } else if(action.payload.operation === "disable-add-button")    {
 
         Components.AddBrowserTabButton.disabled = action.payload.disabled;
+
+    } else if(action.payload.operation === "clear-browser-tabs")   {
+
+        // clear browser tabs;
+        BrowserTabs = [];
 
     } else if(action.payload.operation === "update-browser-tab-info")   {
         let foundTab = BrowserTabs.find(item => item.browserWindowId === action.payload.tab.browserWindowId);
