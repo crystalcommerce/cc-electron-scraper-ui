@@ -26,7 +26,32 @@ export const pages =  {
             label : "Scraped Data",
             parentPage : "Manage Scraper",
             page : "Scraped Data",
+            isActive : false,
+        },
+        {
+            label : "Create Scraper Scripts",
+            parentPage : "Manage Scraper",
+            page : "Create Scraper Scripts",
+            isActive : false,
+        },
+        {
+            label : "Scraper Scripts",
+            parentPage : "Manage Scraper",
+            page : "Scraper Scripts",
             isActive : true,
+        },
+
+        {
+            label : "Create User",
+            parentPage : "Manage Users",
+            page : "Create User",
+            isActive : true,
+        },
+        {
+            label : "Delete User",
+            parentPage : "Manage Users",
+            page : "Delete User",
+            isActive : false,
         },
     ]
 }

@@ -17,7 +17,13 @@ const ACTIONS = {
 
     // browser windows/tabs setter;
     "UPDATE_BROWSER_TABS" : "update-browser-tab",
+
+
+    // update subpages
+    "SET_ACTIVE_SUBPAGE" : "set-active-subpage",
+
 }
+
 
 function setAppWindowDetails(state, action) {
     let {AppWindow, AppWindowId} = state;
@@ -210,6 +216,17 @@ function updateBrowserTabs(state, action)   {
     return {...state};
 }
 
+function setActiveSubpage(state, action)   {
+    let { SubPages, Pages } = state,
+        activePage = Pages.find(item => item.isActive),
+        foundSubPage = SubPages.find(item => item.page === action.payload.page && activePage.page === action.payload.parentPage);
+
+    
+    SubPages.filter(item => item.parentPage === activePage.page).forEach(item => item.isActive = false);
+    foundSubPage.isActive = true;
+
+    return {...state};
+}
 
 
 const reducer = (state, action) => {
@@ -235,6 +252,9 @@ const reducer = (state, action) => {
 
         case ACTIONS.UPDATE_BROWSER_TABS :
             return updateBrowserTabs(state, action);
+
+        case ACTIONS.SET_ACTIVE_SUBPAGE : 
+            return setActiveSubpage(state, action);
 
         case ACTIONS.SET_MULTI_STATE_PROPERTIES : 
             return setMultiStateProperties(state, action);

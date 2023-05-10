@@ -44,7 +44,7 @@ export default function useClassObjectByWidth(classObject)    {
             setSelectedClassByWidth(state => classObject.xlg);
             // console.log({className, windowWidth, size : "xlg"});
         }
-
+        
 
     }, [windowWidth]);
 

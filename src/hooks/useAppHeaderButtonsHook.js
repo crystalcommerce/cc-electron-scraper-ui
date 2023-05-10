@@ -46,7 +46,6 @@ export default function useAppButtonHandlers()   {
     };
 
     const setFullScreenState = (e, data) => {
-        console.log(data);
         dispatch({
             type : ACTIONS.SET_APP_WINDOW_DETAILS,
             payload : data

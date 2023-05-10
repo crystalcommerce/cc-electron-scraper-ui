@@ -1,46 +1,44 @@
-import React, { useContext, useEffect, useState } from "react";
-import { GlobalStateContext } from "../../store/GlobalState";
+import React, { useContext } from "react";
 import SidebarNavItem from "../SidebarNavItem/SidebarNavItem";
 import { Box, List, Divider } from "@mui/material";
+import useSidebarNavHook from "../../hooks/useSidebarNavHook";
+import { GlobalStateContext } from "../../store/GlobalState";
 // import NavButton from "../NavButton";
 
 
 export default function SidebarNav() {
 
-    const [GlobalState] = useContext(GlobalStateContext);
-
-    const [activePage, setActivePage] = useState(null);
-
-    useEffect(() => {
-
-        if(!activePage) {
-
-            setActivePage(prev => GlobalState.Pages.find(item => item.isActive));
-
-        }
-
-    }, [GlobalState]);
+    const {currentNavList, activePage, clickHandler, activeSubPage} = useSidebarNavHook();
 
     return (
 
-        
-        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: '#2d3c46' }}>
-            <List className="cc-sidebar-nav" component="nav" aria-label="secondary mailbox folder">
-                {
-                    activePage && GlobalState.SidebarNavItems.filter(item => activePage.page === item.parentPage).map((item, index) => {
-                        return(
-                            <div key={index} >
-                                <SidebarNavItem className="sidebar-nav-item" page={item.page} label={item.label} hasFrameWindow={item.hasFrameWindow} />
-                                {
-                                    index !== GlobalState.SidebarNavItems.length - 1 &&
-                                    <Divider variant="middle" component="li" />
-                                }
-                                
-                            </div>
-                        );
-                    })
-                }
-            </List>
-        </Box>
+        <>
+            {
+                currentNavList.length > 0 &&
+                <Box sx={{ width: '100%', maxWidth: 360, bgcolor: '#2d3c46' }}>
+                    <List className="cc-sidebar-nav" component="nav" aria-label="secondary mailbox folder">
+                        {
+                            currentNavList.map((item, index) => {
+                                return(
+                                    <div key={index} >
+                                        <SidebarNavItem 
+                                            disabled={activeSubPage && activeSubPage.page === item.page}  
+                                            onClick={clickHandler.bind(this, item)} 
+                                            className="sidebar-nav-item" page={item.page} 
+                                            label={item.label} 
+                                            hasFrameWindow={item.hasFrameWindow} 
+                                        />
+                                        {
+                                            index !== currentNavList.length - 1 &&
+                                            <Divider variant="middle" component="li" />
+                                        }
+                                    </div>
+                                );
+                            })
+                        }
+                    </List>
+                </Box>
+            }
+        </>
     )
 }

@@ -6,6 +6,7 @@ import useActivePagesHook from "../../hooks/useActivePagesHook";
 export default function ManageScraper({children})   {
     
     const isActive = useActivePagesHook("Manage Scraper");
+    
     return (
         <>
             {isActive && 

@@ -39,7 +39,13 @@ export const globalState = {
         //     "label": "YouTube"
         // }
     ],
-    ScraperTabs : [
+    ScraperFrames : [
+
+    ],
+    ScraperScritps : [
+
+    ],
+    ScraperWindows : [
         // {
         //     windowId : null,
         //     parentWindowId : null,

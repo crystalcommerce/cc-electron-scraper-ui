@@ -37,14 +37,31 @@ export const navItems = {
             label : "Scraped Data",
             parentPage : "Manage Scraper",
             page : "Scraped Data",
-            location : "sidebar",
             id : generateUuid(),
         },
         {
             label : "Scraper Scripts",
             parentPage : "Manage Scraper",
             page : "Scraper Scripts",
-            location : "sidebar",
+            id : generateUuid(),
+        },
+        {
+            label : "Create Scraper Scripts",
+            parentPage : "Manage Scraper",
+            page : "Create Scraper Scripts",
+            id : generateUuid(),
+        },
+
+        {
+            label : "Create User",
+            parentPage : "Manage Users",
+            page : "Create User",
+            id : generateUuid(),
+        },
+        {
+            label : "Delete User",
+            parentPage : "Manage Users",
+            page : "Delete User",
             id : generateUuid(),
         },
     ],

@@ -3,7 +3,7 @@ import useClassObjectByWidth from "../../hooks/useClassObjectByWidth";
 
 import EmptyCard from "../EmptyCard";
 
-export default function Card({className, children, classObject, noFlex, elRef})  {
+export default function Card({className, children, classObject, noFlex, elRef, autoHeight})  {
 
     elRef = elRef ? elRef : null;
 
@@ -17,7 +17,7 @@ export default function Card({className, children, classObject, noFlex, elRef}) 
                 </EmptyCard>
             }
             {noFlex && 
-                <div ref={elRef} className={`cc-card ${className ? className : ""}`}>{children}</div>
+                <div ref={elRef} className={`cc-card ${className ? className : ""} ${addedClasses}`}>{children}</div>
             }
         </>
         

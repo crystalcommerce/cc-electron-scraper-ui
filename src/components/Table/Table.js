@@ -19,11 +19,11 @@ import Modal from '../Modal';
 
 
 // utils
-import {createColumns, getAllObjectKeys} from "../../utilities";
+// import {createColumns, getAllObjectKeys} from "../utilities";
 import NativeImage from '../NativeImage/NativeImage';
+import { createColumns, getAllObjectKeys } from '../../utilities';
 
-export default function StickyHeadTable({tableCaption, tableData, excludedProps, uniqueDataProp, styledColumnObjects, showActionButtons, showIndex}) {
-
+export default function StickyHeadTable({tableCaption, tableData, excludedProps, uniqueDataProp, styledColumnObjects, showActionButtons, showIndex, tableRowClickHandler}) {
 
     tableCaption = tableCaption || "Data Table";
 
@@ -184,7 +184,7 @@ export default function StickyHeadTable({tableCaption, tableData, excludedProps,
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => {
                             return (
-                            <TableRow hover role="checkbox" tabIndex={-1} key={`${row[uniqueDataProp]}${index}`}>
+                            <TableRow className="cc-pointer" onClick={tableRowClickHandler.bind(this, row)} hover role="checkbox" tabIndex={-1} key={`${row[uniqueDataProp]}${index}`}>
                                 {columns.map((column) => {
 
                                     

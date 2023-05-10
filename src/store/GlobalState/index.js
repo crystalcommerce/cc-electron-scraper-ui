@@ -22,16 +22,6 @@ const GlobalStateProvider = ({children}) => {
 
     const [state, dispatch] = useReducer(reducer, {...globalState, AppWindowId, AppWindow});
 
-    
-
-    useEffect(() => {
-
-        
-
-
-
-        // checkAppWindowId();
-    }, [])
 
     return (
         <GlobalStateContext.Provider value={[state, dispatch]}>

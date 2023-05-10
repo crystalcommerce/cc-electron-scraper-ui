@@ -15,6 +15,9 @@ import InternetBrowser from "./pages/InternetBrowser/InternetBrowser";
 /* Test child components */
 import CardTest from "./test/CardTest";
 import Card from "./components/Card/Card";
+import ScrapedData from "./subpages/Scraped Data/ScrapedData";
+import ScraperScripts from "./subpages/ScraperScripts/ScraperScritps";
+import CreateScraperScripts from "./subpages/CreateScraperScripts/CreateScraperScripts";
 
 
 
@@ -38,14 +41,11 @@ export default function MainComponent() {
                         <CardTest  />
                     </Home>
                     <ManageScrapers>
-                        <Card></Card>
-                        <Card></Card>
-                        <Card></Card>
-                        <Card></Card>
-                        <Card></Card>
+                        <ScrapedData></ScrapedData>
+                        <ScraperScripts></ScraperScripts>
+                        <CreateScraperScripts></CreateScraperScripts>
                     </ManageScrapers>
                     <InternetBrowser></InternetBrowser>
-                    <ManageScrapers></ManageScrapers>
                     <ManageUsers>
                         <Card></Card>
                         <Card></Card>
