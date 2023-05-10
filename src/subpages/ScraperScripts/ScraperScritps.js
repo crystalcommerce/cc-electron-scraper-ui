@@ -10,6 +10,8 @@ import Table from "../../components/Table";
 import useToggleCardHook from "../../hooks/useToggleCardHook";
 import ToggleCardData from "../../components/ToggleCardData/ToggleCardData";
 
+const {ipcRenderer} = window.require("electron");
+
 
 
 export default function ScraperScripts({children}) {
@@ -23,7 +25,8 @@ export default function ScraperScripts({children}) {
     const {data : scraperScripts} = useFetch("/api/modules/scripts");
 
     const tableRowClickHandler = (script, e) => {
-        toggleClickHandler()
+        toggleClickHandler();
+        ipcRenderer.send()
     }
 
     
