@@ -31,7 +31,10 @@ export default function ImageSlider({imageUris, className})   {
         <div className={`cc-image-slider ${className ? ` ${className}` : ""}`}>
             
             <div className='cc-image-slider-outer-container' ref={imageContainer}>
-            <button className={'image-slider-button prev'} onClick={prevImageHandler}><NavigateBeforeIcon /></button>
+            {
+                imageUris.length > 1 &&
+                <button className={'image-slider-button prev'} onClick={prevImageHandler}><NavigateBeforeIcon /></button>
+            }
             {imageUris.map((item, index) => {
                 return (
                     <div key={`${index}-${item}`} className={`cc-image-container ${index === currentImage ? "current-image" : "hidden"}`}>
@@ -39,7 +42,11 @@ export default function ImageSlider({imageUris, className})   {
                     </div>
                 )
             })}
-            <button className={'image-slider-button next'} onClick={nextImageHandler}><NavigateNextIcon /></button>
+            {
+                imageUris.length > 1 && 
+                <button className={'image-slider-button next'} onClick={nextImageHandler}><NavigateNextIcon /></button>
+            }
+            
             </div>
             
         </div>

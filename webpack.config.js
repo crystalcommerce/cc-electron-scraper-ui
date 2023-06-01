@@ -56,26 +56,57 @@ module.exports={
          * add it to the bundle. And in this process, kindly make sure to exclude node_modules folder from 
          * being searched"
          */
+        // rules: [
+        //     {
+        //         test: /\.(js|jsx)$/,    //kind of file extension this rule should look for and apply in test
+        //         exclude: /node_modules/, //folder to be excluded
+        //         use:  'babel-loader' //loader which we are going to use
+        //     },
+        //     {
+        //         test: /\.s[ac]ss$/i,
+        //         use: [
+        //             "style-loader",
+        //             "css-loader",
+        //             "less-loader",
+        //             {
+        //               loader: "sass-loader",
+        //               options: {
+        //                 // Prefer `dart-sass`
+        //                 implementation: require("node-sass"),
+        //               },
+        //             },
+        //         ],
+        //     },
+        //     {
+        //         test: /\.css$/,
+        //         use: ['style-loader', 'css-loader'],
+        //     },
+        // ]
         rules: [
             {
-                test: /\.(js|jsx)$/,    //kind of file extension this rule should look for and apply in test
-                exclude: /node_modules/, //folder to be excluded
-                use:  'babel-loader' //loader which we are going to use
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: 'babel-loader',
             },
             {
                 test: /\.s[ac]ss$/i,
                 use: [
-                    "style-loader",
-                    "css-loader",
+                    'style-loader',
+                    'css-loader',
+                    'less-loader',
                     {
-                      loader: "sass-loader",
-                      options: {
+                    loader: 'sass-loader',
+                    options: {
                         // Prefer `dart-sass`
-                        implementation: require("node-sass"),
-                      },
+                        implementation: require('node-sass'),
+                    },
                     },
                 ],
             },
-        ]
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
+        ],
     }
 }

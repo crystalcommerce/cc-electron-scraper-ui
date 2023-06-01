@@ -7,6 +7,8 @@ export const globalState = {
         isOnFullScreen : false,
         isLoading : false,
         isFrameDelayedLoading : false,
+        userDataPath : null,
+        serverUrl : null,
     }, 
     FrameWindows : [
         // {

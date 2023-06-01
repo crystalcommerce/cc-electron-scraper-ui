@@ -40,7 +40,7 @@ export default function useAppWindowReload() {
     const appReadyHandler = (e, data) => {
         console.log(data.message);
         setTimeout(() => {
-            // dispatch({type : ACTIONS.SET_APP_LOADING_STATE, payload : false});
+            dispatch({type : ACTIONS.SET_APP_LOADING_STATE, payload : false});
 
             location.reload();
         }, 1500);

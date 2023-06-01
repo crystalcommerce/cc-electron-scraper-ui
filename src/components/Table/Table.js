@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 // mui components
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material/';
-import { DeleteOutlineOutlined as DeleteOutlineOutlinedIcon, EditOutlined as EditOutlinedIcon, PreviewOutlined as PreviewOutlinedIcon, PlaylistRemove as PlaylistRemoveIcon } from '@mui/icons-material/';
 
 // custom components
 import TablePagination from '../TablePagination';
@@ -15,139 +14,44 @@ import Modal from '../Modal';
 // View Product;
 // Edit Product;
 
-
-
-
 // utils
 // import {createColumns, getAllObjectKeys} from "../utilities";
 import NativeImage from '../NativeImage/NativeImage';
-import { createColumns, getAllObjectKeys } from '../../utilities';
+import useTableHook from '../../hooks/useTableHook';
+import TableImage from '../TableImage/TableImage';
 
-export default function StickyHeadTable({tableCaption, tableData, excludedProps, uniqueDataProp, styledColumnObjects, showActionButtons, showIndex, tableRowClickHandler}) {
+export default function StickyHeadTable(props) {
 
-    tableCaption = tableCaption || "Data Table";
+    const {
+        tableCaption, 
+        tableData, 
+        excludedProps, 
+        styledColumnObjects, 
+        showActionButtons, 
+        tableRowClickHandler, 
 
-    tableData = tableData ? tableData : [];
-
-    excludedProps = excludedProps || [];
-
-    styledColumnObjects = styledColumnObjects || [];
-
-    showActionButtons  = showActionButtons || false;
-
-    /*
-        Pagination configurations;
-    */
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    
-    const handleChangePage = (newPage) => {
-        setPage(state => newPage - 1);
-    };
-
-    const handleChangeRowsPerPage = (newRowsPerPage, newPage) => {
-        setRowsPerPage(state => newRowsPerPage);
-        setPage(state => newPage);
-    };
-
-
-    /*
-        Table data configurations;
-    */
-    const [data, setData] = useState(tableData);
-    const columnKeys = getAllObjectKeys(data).filter(item => !excludedProps.includes(item));
-    const columns = createColumns(columnKeys, styledColumnObjects, showIndex);
-    const [rows, setRows] = useState([]);
-    const [modalOpen, setModalOpen] = useState(false);
-
-    const [modalContent, setModalContent] = useState("");
-    
-
-    const closeModalHandler = () => {
-        setModalOpen(false);
-    }
-
-
-    useEffect(() => {
-        setRows(state => {
-            return data.map((item, index) => {
-                let obj = {};
-                if(showIndex)   {
-                    obj.index = index + 1;
-                }
-                return columnKeys.reduce((a, b) => {
-                    a[b] = item[b];
-                    return a;
-                }, obj);
-            });
-        });
-    }, [data]);
-    
-    /*
-        Row Action Buttons;
-    */
-    const rowActionButtons=[
-        {
-            label : "View",
-            dropdownLabel : "View Product Data",
-            size : "medium",
-            action : "view",
-            color : "info",
-            icon : <PreviewOutlinedIcon></PreviewOutlinedIcon>,
-            optionClickHandler : (foundData) => {
-                // console.log(data);
-                // console.log(`View data with unique id of ${foundData[uniqueDataProp]}`);
-
-                setModalOpen(true);
-                setModalContent(state => {
-                    return (
-                        <>
-                            <pre style="font-family: monospace;">
-                                {JSON.stringify(foundData, null, 4)}
-                            </pre>
-                        </>
-                    )
-                });
-            }
-        },
-        {
-            label : "Edit",
-            dropdownLabel : "Edit Product Info",
-            size : "medium",
-            color : "secondary",
-            action : "edit",
-            icon : <EditOutlinedIcon></EditOutlinedIcon>,
-            optionClickHandler : (foundData) => {
-                console.log(`Edit data with unique id of ${foundData[uniqueDataProp]}`);
-            }
-        },
-        {
-            label : "Remove",
-            dropdownLabel : "Remove From Table",
-            size : "medium",
-            color : "warning",
-            action : "delete",
-            icon : <PlaylistRemoveIcon></PlaylistRemoveIcon>,
-            optionClickHandler : (foundData) => {
-                setData(state => {
-                    return data.filter(item => item[uniqueDataProp] !== foundData[uniqueDataProp]);
-                });
-            }
-        },
-        {
-            label : "Delete",
-            dropdownLabel : "Delete Permanently",
-            size : "medium",
-            color : "error",
-            action : "delete",
-            icon : <DeleteOutlineOutlinedIcon></DeleteOutlineOutlinedIcon>,
-            optionClickHandler : (foundData) => {
-                setData(state => {
-                    return data.filter(item => item[uniqueDataProp] !== foundData[uniqueDataProp]);
-                });
-            }
-        },
-    ];
+        page,
+        rowsPerPage,
+        handleChangePage,
+        handleChangeRowsPerPage,
+        uniqueDataProp,
+        data,
+        columns,
+        rows,
+        modalOpen,
+        closeModalHandler,
+        rowActionButtons
+        
+    } = useTableHook({
+        tableCaption : props.tableCaption, 
+        tableData : props.tableData, 
+        excludedProps : props.excludedProps, 
+        uniqueDataProp : props.uniqueDataProp, 
+        styledColumnObjects : props.styledColumnObjects, 
+        showActionButtons : props.showActionButtons, 
+        showIndex : props.showIndex, 
+        tableRowClickHandler : props.tableRowClickHandler,
+    });
 
     return (
         <>
@@ -184,7 +88,7 @@ export default function StickyHeadTable({tableCaption, tableData, excludedProps,
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => {
                             return (
-                            <TableRow className="cc-pointer" onClick={tableRowClickHandler.bind(this, row)} hover role="checkbox" tabIndex={-1} key={`${row[uniqueDataProp]}${index}`}>
+                            <TableRow className="cc-pointer" onClick={tableRowClickHandler.bind(this, row[uniqueDataProp])} hover role="checkbox" tabIndex={-1} key={`${row[uniqueDataProp]}${index}`}>
                                 {columns.map((column) => {
 
                                     
@@ -201,6 +105,8 @@ export default function StickyHeadTable({tableCaption, tableData, excludedProps,
                                         value = row.imageUris.map((item, index) => {
                                             return <NativeImage key={`${index}-${item}`} src={item} />
                                         });
+
+                                        // value = <TableImage imageUris={row.imageUris}></TableImage>
                                     }
 
 

@@ -10,7 +10,7 @@ export default function NativeImage({ className, src, alt, srcset, sizes, height
 
     return (
         <>
-            <img className={className} src={usedImageSrc} alt={alt} height={height} width={width} sizes={sizes} srcSet={srcset} useMap={useMap} />
+            <img className={`cc-image ${className}`} src={usedImageSrc} alt={alt} height={height} width={width} sizes={sizes} srcSet={srcset} useMap={useMap} />
         </>
     )
 
