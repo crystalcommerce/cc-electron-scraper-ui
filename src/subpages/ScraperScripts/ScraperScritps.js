@@ -79,8 +79,11 @@ export default function ScraperScripts({children}) {
 
             });
 
-            
-            
+            ipcRenderer.send("close-screenshot-window",  {
+                payload : {
+                    screenshotWindowId : data.payload.screenshotWindowId,
+                },
+            });
         }
         
     }
