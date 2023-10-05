@@ -43,6 +43,9 @@ export default function ScraperScripts({children}) {
 
 
         if(!foundScreenShot)  {
+
+            setImageSrc(prev => null);
+
             ipcRenderer.send("take-screen-shot", {
                 payload : {
                     AppWindowId : GlobalState.AppWindowId,
@@ -149,86 +152,87 @@ export default function ScraperScripts({children}) {
                             tableRowClickHandler={tableRowClickHandler}
                         ></Table>
                     }
-                    <ToggleCardData className={activeCardClassName}>
-                        
-                        {
-                            currentActiveScraperScript && 
-                            <EmptyCard className={"cc-flex cc-col gapped flex-grow cards-container"}>
-                                
-                                {/* toggle card header */}
-                                <PaperBg className="cc-flex cc-row center-left toggle-card-header">
-                                
-                                    <Card className="profile-image-container">
-                                        {imageSrc && 
-                                            <NativeImage className="small-image" src={imageSrc}></NativeImage>
-                                        }
-                                    </Card>
-                                    
-                                    <div className={"site-info"}>
-                                        <Typography className="card-title" variant="h3">Scraper Script Info</Typography>
-                                        <hr className="cc-hr" />
-                                        <List className="site-info-list">
-                                            <ListItem>
-                                                {/* <ListItemText primary={currentActiveScraperScript.siteName} secondary="Site Name" /> */}
-                                                <Typography className="val" variant="p"><Typography className="key" variant="span">Site Name</Typography> : {currentActiveScraperScript.siteName}</Typography>
-                                            </ListItem>
-                                            
-                                            <ListItem>
-                                                <Typography className="val" variant="p"><Typography className="key" variant="span">Site Url</Typography> : {currentActiveScraperScript.siteUrl}</Typography>
-                                            </ListItem>
-                                        </List>
-                                    </div>
-                                </PaperBg>
-                                
-                                {/* toggle card body */}
-                                <PaperBg className="flex-grow toggle-card-body">
-                                    
-                                    <TabbedContents 
-                                        tabMenu={
-                                            [
-                                                "Scraper Script Details", 
-                                                "Run Script", 
-                                                "Modify Script"
-                                            ]
-                                        } 
-                                        tabContents={
-                                            [
-                                                (function(){
-                                                    return (
-                                                        <>
-                                                            <List className="site-info-list">
-                                                                <ListItem>
-                                                                    {/* <ListItemText primary={currentActiveScraperScript.siteName} secondary="Site Name" /> */}
-                                                                    <Typography className="val" variant="p"><Typography className="key" variant="span">Script File Name</Typography> : {currentActiveScraperScript.fileNameWithExt}</Typography>
-                                                                </ListItem>
-                                                                
-                                                                <ListItem>
-                                                                    <Typography className="val" variant="p"><Typography className="key" variant="span">Script File Path</Typography> : {`${GlobalState.AppWindow.userDataPath}/modules/scripts/${currentActiveScraperScript.fileNameWithExt}`}</Typography>
-                                                                </ListItem>
-                                                                
-                                                            </List>
-                                                            <CodeEditor disabled value={currentActiveScraperScript.textData}></CodeEditor>
-                                                        </>
-                                                    )
-                                                }()),
-                                                (function(){
-
-                                                }()),
-                                                (function(){
-                                                    return (
-                                                        <CodeEditor value={currentActiveScraperScript.textData}></CodeEditor>
-                                                    )
-                                                }()),
-                                            ]
-                                        }
-                                        ></TabbedContents>
-
-                                </PaperBg>
-                            </EmptyCard>
+                        <ToggleCardData className={activeCardClassName}>
                             
-                        }
-                        
-                    </ToggleCardData>
+                            {
+                                currentActiveScraperScript && 
+                                <EmptyCard className={"cc-flex cc-col gapped flex-grow cards-container"}>
+                                    
+                                    {/* toggle card header */}
+                                    <PaperBg className="cc-flex cc-row center-left toggle-card-header">
+                                    
+                                        <Card className="profile-image-container">
+                                            {imageSrc && 
+                                                <NativeImage className="small-image" src={imageSrc}></NativeImage>
+                                            }
+                                        </Card>
+                                        
+                                        <div className={"site-info"}>
+                                            <Typography className="card-title" variant="h3">Scraper Script Info</Typography>
+                                            <hr className="cc-hr" />
+                                            <List className="site-info-list">
+                                                <ListItem>
+                                                    {/* <ListItemText primary={currentActiveScraperScript.siteName} secondary="Site Name" /> */}
+                                                    <Typography className="val" variant="p"><Typography className="key" variant="span">Site Name</Typography> : {currentActiveScraperScript.siteName}</Typography>
+                                                </ListItem>
+                                                
+                                                <ListItem>
+                                                    <Typography className="val" variant="p"><Typography className="key" variant="span">Site Url</Typography> : {currentActiveScraperScript.siteUrl}</Typography>
+                                                </ListItem>
+                                            </List>
+                                        </div>
+                                    </PaperBg>
+                                    
+                                    {/* toggle card body */}
+                                    <PaperBg className="flex-grow toggle-card-body">
+                                        
+                                        <TabbedContents 
+                                            tabMenu={
+                                                [
+                                                    "Scraper Script Details", 
+                                                    "Run Script", 
+                                                    "Modify Script"
+                                                ]
+                                            } 
+                                            tabContents={
+                                                [
+                                                    (function(){
+                                                        return (
+                                                            <>
+                                                                <List className="site-info-list">
+                                                                    
+                                                                    <ListItem>
+                                                                        
+                                                                        <Typography className="val" variant="p"><Typography className="key" variant="span">Script File Name</Typography> : {currentActiveScraperScript.fileNameWithExt}</Typography>
+                                                                    </ListItem>
+                                                                    
+                                                                    <ListItem>
+                                                                        <Typography className="val" variant="p"><Typography className="key" variant="span">Script File Path</Typography> : {`${GlobalState.AppWindow.userDataPath}/modules/scripts/${currentActiveScraperScript.fileNameWithExt}`}</Typography>
+                                                                    </ListItem>
+                                                                    
+                                                                </List>
+                                                                <CodeEditor disabled value={currentActiveScraperScript.textData}></CodeEditor>
+                                                            </>
+                                                        )
+                                                    }()),
+                                                    (function(){
+
+                                                    }()),
+                                                    (function(){
+                                                        return (
+                                                            <CodeEditor value={currentActiveScraperScript.textData}></CodeEditor>
+                                                        )
+                                                    }()),
+                                                ]
+                                            }
+                                            ></TabbedContents>
+
+                                    </PaperBg>
+                                </EmptyCard>
+                                
+                            }
+                            
+                        </ToggleCardData>
                     
                     </EmptyCard>
                 </EmptyCard>
