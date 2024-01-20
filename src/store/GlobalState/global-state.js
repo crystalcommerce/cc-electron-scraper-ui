@@ -44,7 +44,7 @@ export const globalState = {
     ScraperFrames : [
 
     ],
-    ScraperScritps : [
+    ScraperScripts : [
 
     ],
     ScraperWindows : [

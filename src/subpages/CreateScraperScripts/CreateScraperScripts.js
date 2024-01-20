@@ -17,6 +17,16 @@ export default function CreateScraperScripts({children}) {
                 <EmptyCard className={"subpage-container flex-grow"}>
                     <Typography>Create Scraper Scripts page</Typography>
                     {children}
+
+                    {/* 
+                    
+                        we want to create the following modules here:
+
+                        route,
+                        model,
+                        script
+                    
+                    */}
                 </EmptyCard>
             }
         </>

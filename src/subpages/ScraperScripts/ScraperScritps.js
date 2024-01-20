@@ -12,7 +12,7 @@ import PaperBg from "../../components/PaperBg/PaperBg";
 import { List, ListItem, Typography } from "@mui/material";
 import TabbedContents from "../../components/TabbedComponent/TabbedContents";
 import CodeEditor from "../../components/CodeEditor";
-const {ipcRenderer} = window.require("electron");
+const { ipcRenderer } = window.require("electron");
 
 
 
